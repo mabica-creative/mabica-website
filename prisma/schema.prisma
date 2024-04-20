@@ -4,34 +4,14 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model metadata {
   id          Int     @id @default(autoincrement())
   name        String? @default("Mabica")
-  description String? @default("Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak \"rin udah makan\" atau \"sehat?\" saat bermain discord.")
+  description String? @default("Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak 'rin udah makan' atau 'sehat?' saat bermain discord.")
   icon        String? @default("/favicon.ico")
   color       String? @default("#6AD4DD")
 }
-
-// model content {
-//   id       Int     @id @default(autoincrement())
-//   about_us String? @default("Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak \"rin udah makan\" atau \"sehat?\" saat bermain discord.")
-// }
-//
-// model team {
-//   id          Int     @id @default(autoincrement())
-//   name        String?
-//   image       String? @default("/no-image.jpg")
-//   description String? @default("Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak \"rin udah makan\" atau \"sehat?\" saat bermain discord.")
-// }
-//
-// model social {
-//   id    Int     @id @default(autoincrement())
-//   name  String?
-//   link  String?
-//   icon  String?
-//   color String?
-// }
