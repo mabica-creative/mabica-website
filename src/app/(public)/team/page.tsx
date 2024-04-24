@@ -5,7 +5,7 @@ export default async function TeamPage() {
   const data = await getTeam();
   // console.log(data);
 
-  if (data?.status !== "success") {
+  if (data?.status !== "success" || !data) {
     return (
       <main className="flex justify-center gap-2 items-center">
         ada yang salah
