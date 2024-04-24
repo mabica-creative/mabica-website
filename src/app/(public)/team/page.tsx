@@ -6,7 +6,9 @@ export default async function TeamPage() {
   const data = await getTeam();
   // console.log(data);
 
-  if(data?.status !== 'success') return notFound()
+  if(data?.status !== 'success') {
+    return notFound()
+  }
 
   const team = data?.data
 
