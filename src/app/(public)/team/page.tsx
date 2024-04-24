@@ -1,6 +1,5 @@
 import { getTeam } from "@/frontend/team";
 import { team } from "@prisma/client";
-import { notFound } from "next/navigation";
 
 export default async function TeamPage() {
   const data = await getTeam();
