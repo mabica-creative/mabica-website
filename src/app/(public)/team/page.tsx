@@ -1,19 +1,16 @@
 import { getTeam } from "@/frontend/team";
 import { team } from "@prisma/client";
+import { notFound } from 'next/navigation'
 
 export default async function TeamPage() {
   const data = await getTeam();
   // console.log(data);
 
-  if (data?.status !== "success" || !data) {
-    return (
-      <main className="flex justify-center gap-2 items-center">
-        ada yang salah
-      </main>
-    );
+  if(data?.status !== 'success' || !data) {
+    return notFound()
   }
 
-  const team = data?.data;
+  const team = data?.data
 
   return (
     <main className="flex justify-center gap-2 items-center">
