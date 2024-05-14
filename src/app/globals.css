@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --text: #12180c;
+    --background: #eff5e5;
+    --primary: #549900;
+    --secondary: #b7e085;
+    --accent: #7bc224;
+  }
+
+  .dark {
+    --text: #edf3e6;
+    --background: #141b0a;
+    --primary: #b9ff66;
+    --secondary: #527c1f;
+    --accent: #94db3e;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+}
+
+::-moz-selection,
+::selection {
+  background: var(--secondary);
+}

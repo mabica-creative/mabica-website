@@ -1,25 +1,22 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import { Inter } from "next/font/google";
+import overview from "@/config/overview.json" assert { type: "json" };
 import type { Viewport } from "next";
+import type { Metadata } from "next";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
-  themeColor: "#3a31d8",
+  themeColor: overview?.color,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://acme.com'),
-  title: "Mabica",
-  description:
-    'Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak "rin udah makan" atau "sehat?" saat bermain discord.',
+  title: overview?.title,
+  description: overview?.description,
   openGraph: {
-    title: "Mabica",
-    description:
-      'Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak "rin udah makan" atau "sehat?" saat bermain discord.',
-    siteName: "Mabica",
-  }
+    title: overview?.title,
+    description: overview?.description,
+  },
 };
 
 export default function RootLayout({
@@ -29,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-background text-text `}>
+      <body className={`${font.className} bg-background text-text `}>
         {children}
       </body>
     </html>
