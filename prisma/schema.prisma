@@ -13,15 +13,15 @@ model overview {
   title       String? @default("Mabica")
   description String? @default("Mabica (Mari Bikin Cerita) adalah perkumpulan orang gabut yang mungkin membuat cerita supaya tidak 'rin udah makan' atau 'sehat?' saat bermain discord.")
   icon        String? @default("/favicon.ico")
-  color       String? @default("#6AD4DD")
-  image       String? @default("/image/image.jpg")
+  color       String? @default("#b9ff66")
+  image       String? @default("/image.jpg")
 }
 
 model team {
   id          Int     @id @default(autoincrement())
   name        String?
   description String?
-  image       String? @default("/image/profile.jpg")
-  color       String? @default("#6AD4DD")
+  image       String? @default("/profile.jpg")
+  color       String? @default("#b9ff66")
   role        String? @default("member")
 }
