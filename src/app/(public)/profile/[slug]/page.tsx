@@ -20,7 +20,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
         <div className="flex flex-col justify-center">
           <h1 className="font-semibold text-2xl underline underline-offset-4 decoration-[var(--secondary)] ">
-            {params?.slug}
+            @{params?.slug}
           </h1>
           <p>{`Konnichiwa. I can learn Japanese better thanks to Tanaka-san.`}</p>
         </div>
