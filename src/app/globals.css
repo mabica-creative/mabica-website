@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer base {
   :root {
     --text: #12180c;
@@ -29,3 +25,8 @@ body {
 ::selection {
   background: var(--secondary);
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
