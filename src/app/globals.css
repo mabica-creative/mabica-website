@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer base {
   :root {
     --text: #12180c;
@@ -9,7 +13,7 @@
 
   .dark {
     --text: #edf3e6;
-    --background: #111;
+    --background: #141b0a;
     --primary: #b9ff66;
     --secondary: #527c1f;
     --accent: #94db3e;
@@ -25,8 +29,4 @@ body {
 ::selection {
   background: var(--secondary);
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
