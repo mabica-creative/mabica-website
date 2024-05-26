@@ -15,6 +15,10 @@ const config: Config = {
         secondary: "#020024",
         accent: "#0600c2",
       },
+
+      animation: {
+        "spin-slow": "spin 10s linear infinite",
+      },
     },
   },
 };

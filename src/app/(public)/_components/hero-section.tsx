@@ -6,14 +6,14 @@ export function HeroSection() {
         <div className=" flex flex-col gap-2 flex-1">
           <span className="font-medium text-2xl text-white/50">Welcome to</span>
           <h1 className="text-8xl -mt-4 ">Mabica</h1>
-          <p className="font-medium -mb-2 text-white/50 w-3/4">
+          <p className="font-medium text-white/50 w-3/4">
             {'"'}Kebahagiaan akan selalu datang di tengah kebersamaan. Apa pun
             itu, lakukanlah bersama-sama. Hidup ceria dan bahagia ketika senyum
             bersama{'"'}.
           </p>
           <SocialMedia />
         </div>
-        <div className="w-1/3 bg-[var(--secondary)] aspect-square rounded-lg"></div>
+        <div className="w-1/3 bg-[var(--primary)] aspect-square rounded-lg"></div>
       </section>
   )
 }

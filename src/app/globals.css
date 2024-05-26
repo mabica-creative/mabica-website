@@ -13,9 +13,9 @@
 
   .dark {
     --text: #edf3e6;
-    --background: #141b0a;
-    --primary: #b9ff66;
-    --secondary: #527c1f;
+    --background: #17191a;
+    --primary: #9aff20;
+    --secondary: #b7e085;
     --accent: #94db3e;
   }
 }
@@ -27,6 +27,5 @@ body {
 
 ::-moz-selection,
 ::selection {
-  background: var(--secondary);
+  background-color: var(--secondary);
 }
-
