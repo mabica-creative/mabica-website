@@ -7,9 +7,9 @@ export function HeroSection() {
           <span className="font-medium text-2xl text-white/50">Welcome to</span>
           <h1 className="text-8xl -mt-4 ">Mabica</h1>
           <p className="font-medium text-white/50 w-3/4">
-            {'"'}Kebahagiaan akan selalu datang di tengah kebersamaan. Apa pun
+            “Kebahagiaan akan selalu datang di tengah kebersamaan. Apa pun
             itu, lakukanlah bersama-sama. Hidup ceria dan bahagia ketika senyum
-            bersama{'"'}.
+            bersama”
           </p>
           <SocialMedia />
         </div>
