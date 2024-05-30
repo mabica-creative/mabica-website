@@ -9,10 +9,10 @@ export function Header(): React.ReactNode {
             Mabica
           </Link>
           <div className="space-x-14 font-medium text-white/50">
-            <Link href="#" className="hover:text-white">Home</Link>
-            <Link href="#about" className="hover:text-white">About</Link>
-            <Link href="#team" className="hover:text-white">Team</Link>
-            <Link href="#gallery" className="hover:text-white">Galerry</Link>
+            <Link href="/" className="hover:text-white">Home</Link>
+            <Link href="/about" className="hover:text-white">About</Link>
+            <Link href="/team" className="hover:text-white">Team</Link>
+            <Link href="/gallery" className="hover:text-white">Galerry</Link>
           </div>
           <SocialMedia />
         </nav>

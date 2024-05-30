@@ -15,7 +15,7 @@ export function TeamSection() {
           “Meet the brilliant minds behind the inception of Mabica Grup.”
         </p>
         <div className="flex gap-2">
-          <Link href="/about">
+          <Link href="/team">
             <button className="border border-white rounded py-1 px-4">
               See More
             </button>
