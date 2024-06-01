@@ -6,7 +6,7 @@ interface CardInterface {
   image?: string | undefined;
   name: string;
   heading: string;
-  className: string;
+  className: string | undefined;
 }
 
 export function TeamCard({ className, link = "/", image = "/profile.png", name, heading }: CardInterface ) {
