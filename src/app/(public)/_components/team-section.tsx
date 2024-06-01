@@ -6,7 +6,7 @@ export function TeamSection() {
   return (
     <section
       id="team"
-      className="flex items-center justify-between py-20 max-w-screen-xl w-screen mx-auto px-[7%]"
+      className="flex flex-col lg:flex-row gap-6 justify-between py-20 max-w-screen-xl w-screen mx-auto px-[7%]"
     >
       <div className=" flex flex-col gap-2 ">
         <span className="font-medium text-xl text-white/50">Endless</span>
@@ -23,7 +23,7 @@ export function TeamSection() {
           <SocialMedia />
         </div>
       </div>
-      <div className="bg-[var(--primary)]/20 flex gap-2 w-7/12 min-h-64 rounded-lg">
+      <div className="bg-[var(--primary)]/20 flex gap-2 w-full lg:w-7/12 min-h-64 rounded-lg">
         <TeamCard name="@ray" heading="Jack of all trade" />
         <TeamCard name="@rian" heading="Jack of all trade" />
         <TeamCard name="@cemy" heading="Jack of all trade" />
