@@ -3,13 +3,6 @@
 // import { notFound } from "next/navigation";
 import { TeamCard } from "@/components/team-card";
 
-interface CardInterface {
-  link?: string | undefined;
-  image?: string | undefined;
-  name: string;
-  heading: string;
-}
-
 export default async function TeamPage() {
   // const data = await getTeam();
   // console.log(data);
@@ -47,9 +40,9 @@ export default async function TeamPage() {
         {team.map((devision, index) => (
           <div key={index}>
             <h2 className="text-2xl">{devision?.name}</h2>
-            <div className="flex gap-2 flex-wrap">
+           <div className="flex gap-2 justify-between md:justify-normal flex-wrap">
               {devision.members.map((member, i) => (
-                <TeamCard key={i} name={member.name} heading={member.title} image={member?.image} link={member?.link} />
+                <TeamCard key={i} className="w-[48%] sm:w-[32%] md:w-fit" name={member.name} heading={member.title} image={member?.image} link={member?.link} />
               ))}
             </div>
           </div>
