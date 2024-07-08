@@ -5,14 +5,14 @@ import { SiSpotify } from "react-icons/si";
 
 export function SocialMedia() {
   return (
-    <div className="flex text-xl gap-1 items-center text-white/50">
-      <Link className="hover:text-white duration-300" href="https://watppad.com">
+    <div className="flex text-xl gap-1 items-center text-text opacity-50">
+      <Link className="hover:text-text duration-300" href="https://watppad.com">
         <SiWattpad />
       </Link>
-      <Link className="hover:text-white duration-300" href="https://instagram.com">
+      <Link className="hover:text-text duration-300" href="https://instagram.com">
         <AiFillInstagram />
       </Link>
-      <Link className="hover:text-white duration-300" href="https://spotify.com">
+      <Link className="hover:text-text duration-300" href="https://spotify.com">
         <SiSpotify />
       </Link>
     </div>
