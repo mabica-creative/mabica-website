@@ -1,6 +1,8 @@
+
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import overview from "@/config/overview.json" assert { type: "json" };
+
 import type { Viewport } from "next";
 import type { Metadata } from "next";
 
