@@ -1,3 +1,3 @@
 # Mabica Website
 
-Just a website for mabica.
+Just an/a website for mabica.

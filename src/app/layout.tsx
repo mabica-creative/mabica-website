@@ -1,4 +1,3 @@
-
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import overview from "@/config/overview.json" assert { type: "json" };
