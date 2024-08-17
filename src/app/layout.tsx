@@ -1,36 +1,29 @@
 import "./globals.css";
-import { Poppins } from "next/font/google";
-import overview from "@/config/overview.json" assert { type: "json" };
-
-import type { Viewport } from "next";
 import type { Metadata } from "next";
-
-const font = Poppins({
-  weight: ["300", "400", "500", "600"],
-  subsets: ["latin"],
-});
-
-export const viewport: Viewport = {
-  themeColor: overview?.color,
-};
+import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: overview?.title,
-  description: overview?.description,
-  openGraph: {
-    title: overview?.title,
-    description: overview?.description,
+  title: {
+    default: "Mabica Creative Studio",
+    template: "%s - Mabica Creative Studio",
+  },
+  description:
+    "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+const font = Inter({ subsets: ["latin"] });
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${font.className}`}>{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body className={font.className}>{children}</body>
     </html>
   );
 }
