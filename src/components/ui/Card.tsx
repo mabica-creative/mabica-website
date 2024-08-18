@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { audiobookTypes } from "@/lib/firebase/getAudiobooks";
+import { Audiobook } from "@/hooks/useAudiobooks";
 
-export function Card({ audiobook }: { audiobook: audiobookTypes }) {
+export function Card({ audiobook }: { audiobook: Audiobook }) {
   return (
     <Link href={`/audiobooks/${audiobook?.slug}`}>
       <div className="overflow-hidden rounded-xl mb-2 relative">

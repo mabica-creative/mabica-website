@@ -1,9 +1,5 @@
 import Link from "next/link";
-
-interface links {
-  title: string;
-  href: string;
-}
+import { links } from "@/lib/data/dataNavbar"
 
 interface FooterLinksProps {
   heading: string;
