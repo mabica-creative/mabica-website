@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Audiobook } from "@/hooks/useAudiobooks";
+import { Audiobook } from "@/lib/interface/Audiobook";
 
 export function Card({ audiobook }: { audiobook: Audiobook }) {
   return (

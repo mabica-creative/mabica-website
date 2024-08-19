@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
-import { Audiobook } from "@/hooks/useAudiobooks";
+import { Audiobook } from "@/lib/interface/Audiobook";
 
 export function CardContainer({ audiobooks }: { audiobooks: Audiobook[] }) {
   return (
