@@ -1,9 +1,14 @@
 "use client";
 
-import { useAudiobooks } from "@/hooks/useAudiobooks";
+import { useChapters } from "@/hooks/useChapters";
+import React from "react";
 
-export default function AudiobooksPage() {
-  const { data, loading, error } = useAudiobooks();
+interface ChaptersPageProps {
+  audiobookSlug: string;
+}
+
+export function ChaptersContainer({ audiobookSlug }: ChaptersPageProps) {
+  const { data, loading, error } = useChapters(audiobookSlug);
 
   return (
     <>
@@ -29,4 +34,3 @@ export default function AudiobooksPage() {
     </>
   );
 }
-

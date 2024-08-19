@@ -5,32 +5,20 @@ import {
   DocumentData,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
+import { Audiobook } from "@/lib/interface/Audiobook";
 import { useState, useEffect } from "react";
-
-interface Audiobook {
-  slug?: string;
-  id: number;
-  name: string;
-  image: string;
-  delete?: boolean;
-}
 
 async function getAudiobooks(): Promise<Audiobook[]> {
   try {
-    // Fetch audiobooks collection
     const querySnapshot = await getDocs(collection(db, "audiobooks"));
+    const audiobooks: Audiobook[] = querySnapshot.docs
+      .map((doc: QueryDocumentSnapshot<DocumentData>) => ({
+        ...(doc.data() as Audiobook),
+      }))
+      .filter((audiobook: Audiobook) => !audiobook.deleted)
+      .sort((a, b) => a.posted - b.posted);
 
-    // Extract and filter audiobooks
-    const audiobooks = querySnapshot.docs
-      .map((doc: QueryDocumentSnapshot<DocumentData>) => {
-        const { id, name, image, delete: deleted } = doc.data();
-        return { slug: doc.id, id, name, image, delete: deleted };
-      })
-      .filter((audiobook: Audiobook) => !audiobook.delete)
-      .sort((a, b) => a.id - b.id);
-
-    // Log and return the array of audiobooks
-    console.log(audiobooks);
+    // console.log(audiobooks);
     return audiobooks;
   } catch (error) {
     console.error("Error fetching audiobooks: ", error);
@@ -38,20 +26,19 @@ async function getAudiobooks(): Promise<Audiobook[]> {
   }
 }
 
-export function useAudiobooks() {
-  const [audiobooks, setAudiobooks] = useState<Audiobook[]>([]);
+function useAudiobooks() {
+  const [data, setData] = useState<Audiobook[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError(null);
       try {
         const data = await getAudiobooks();
-        setAudiobooks(data);
+        setData(data);
       } catch (error) {
-        setError("Error fetching audiobooks: " + error);
+        setError(error as Error); // Type assertion to Error
       } finally {
         setLoading(false);
       }
@@ -60,8 +47,7 @@ export function useAudiobooks() {
     fetchData();
   }, []);
 
-  return { audiobooks, loading, error };
+  return { data, loading, error };
 }
 
-export { getAudiobooks };
-export type { Audiobook };
+export { useAudiobooks };

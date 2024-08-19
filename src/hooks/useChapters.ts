@@ -1,67 +1,59 @@
-import { useState, useEffect } from 'react';
-import { db } from "@/lib/firebase"; // Adjust the import path as needed
+import { db } from "@/lib/firebase";
 import {
   query,
   where,
-  collection,
   getDocs,
+  collection,
   DocumentData,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
+import { Chapter } from "@/lib/interface/Chapter";
+import { useState, useEffect } from "react";
 
-// Define chapter types
-export interface ChapterTypes {
-  slug?: string;
-  id: number;
-  title: string;
-  script: string;
-  audio: string;
-  delete?: boolean;
-  audiobook_id?: number;
+async function getChapters(audiobookSlug: string): Promise<Chapter[]> {
+  try {
+    const q = query(
+      collection(db, "chapters"),
+      where("audiobook_id", "==", audiobookSlug),
+    );
+    const querySnapshot = await getDocs(q);
+
+    const chapters: Chapter[] = querySnapshot.docs
+      .map((doc: QueryDocumentSnapshot<DocumentData>) => ({
+        ...(doc.data() as Chapter),
+      }))
+      .filter((chapter: Chapter) => !chapter.deleted)
+      .sort((a, b) => a.posted - b.posted);
+
+    return chapters;
+  } catch (error) {
+    console.error("Error fetching audiobooks: ", error);
+    throw error;
+  }
 }
 
-// Custom hook to fetch and manage chapter data
-export function useChapters(id: number) {
-  const [chapters, setChapters] = useState<ChapterTypes[] | null>([]);
+function useChapters(audiobookSlug: string) {
+  const [data, setData] = useState<Chapter[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchChapters = async () => {
+    const fetchData = async () => {
       setLoading(true);
-      setError(null);
-
       try {
-        const chapters: ChapterTypes[] = [];
-        const q = query(
-          collection(db, "chapters"),
-          where("audiobook_id", "==", id)
-        );
-        const querySnapshot = await getDocs(q);
-
-        querySnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
-          const data = doc.data() as Omit<ChapterTypes, 'slug'>;
-          if (!data.delete) {
-            chapters.push({
-              slug: doc.id,
-              ...data
-            });
-          }
-        });
-
-        chapters.sort((a, b) => a.id - b.id);
-
-        setChapters(chapters);
+        const data = await getChapters(audiobookSlug);
+        setData(data);
       } catch (error) {
-        setError('Error fetching chapters: ' + (error instanceof Error ? error.message : 'Unknown error'));
+        setError(error as Error); // Type assertion to Error
       } finally {
         setLoading(false);
       }
     };
 
-    fetchChapters();
-  }, [id]);
+    fetchData();
+  }, [audiobookSlug]);
 
-  return { chapters, loading, error };
+  return { data, loading, error };
 }
 
+export { useChapters };

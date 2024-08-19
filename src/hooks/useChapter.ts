@@ -1,80 +1,56 @@
-import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
-import { doc, getDoc, DocumentSnapshot } from "firebase/firestore";
+import { Chapter } from "@/lib/interface/Chapter";
+import {
+  doc,
+  getDoc,
+  DocumentSnapshot,
+  DocumentData,
+} from "firebase/firestore";
+import { useState, useEffect } from "react";
 
-// Define the types
-export interface Chapter {
-  chapterSlug?: string;
-  title: string;
-  delete?: boolean; // Optional field to indicate if the chapter is deleted
-}
-
-export interface DetailCh {
-  slug: string;
-  ch: number;
-}
-
-// Function to fetch a single chapter by its slug
-export async function getChapter(slug: string): Promise<Chapter | false> {
-  const docRef = doc(db, "chapters", slug);
-
+async function getChapter(chapterSlug: string): Promise<Chapter | null> {
   try {
-    const docSnapshot: DocumentSnapshot = await getDoc(docRef);
+    const docRef = doc(db, "chapters", chapterSlug);
+    const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
 
-    if (!docSnapshot.exists()) {
-      console.log(`Chapter with slug '${slug}' not found.`);
-      return false;
+    if (!docSnap.exists() || docSnap.data().deleted) {
+      return null;
     }
 
-    const data = docSnapshot.data() as Chapter;
-
-    if (data.delete) {
-      return false;
-    }
-
-    return { chapterSlug: docSnapshot.id, ...data };
+    return docSnap.data() as Chapter;
   } catch (error) {
-    console.error("Error fetching chapter:", error);
-    return false;
+    console.error("Error fetching audiobook: ", error);
+    return null;
   }
 }
 
-// Custom hook to fetch and manage chapter data
-export function useChapter(chapterId: string) {
-  const [chapter, setChapter] = useState<Chapter | false>(false);
-  const [detailCh, setDetailCh] = useState<DetailCh | false>(false);
-  const [availableCh, setAvailableCh] = useState<boolean>(true);
+function useChapter(chapterSlug: string) {
+  const [data, setData] = useState<Chapter | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchChapter = async () => {
+    const fetchBook = async () => {
       setLoading(true);
       setError(null);
       try {
-        const chapterData = await getChapter(chapterId);
-
-        if (chapterData) {
-          const chapterArray = chapterId.split("-");
-          const chapterNumber = parseInt(chapterArray.pop() || "0", 10);
-          const chapterSlug = chapterArray.join("-");
-
-          setDetailCh({ slug: chapterSlug, ch: chapterNumber });
-          setChapter(chapterData);
+        const result = await getChapter(chapterSlug);
+        if (result) {
+          setData(result);
         } else {
-          setAvailableCh(false);
+          setError("Audiobook not found.");
         }
-      } catch (error) {
-        setError("Error fetching chapter: " + (error instanceof Error ? error.message : "Unknown error"));
+      } catch (err) {
+        setError("Error fetching audiobook: " + (err as Error).message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (chapterId) {
-      fetchChapter();
-    }
-  }, [chapterId]);
+    fetchBook();
+  }, [chapterSlug]);
 
-  return { chapter, detailCh, availableCh, loading, error };
+  return { data, loading, error };
 }
+
+export { useChapter };
