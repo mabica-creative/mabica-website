@@ -3,11 +3,11 @@
 import { useChapters } from "@/hooks/useChapters";
 import React from "react";
 
-interface ChaptersPageProps {
+interface ChaptersContainer {
   audiobookSlug: string;
 }
 
-export function ChaptersContainer({ audiobookSlug }: ChaptersPageProps) {
+export function ChaptersContainer({ audiobookSlug }: ChaptersContainer) {
   const { data, loading, error } = useChapters(audiobookSlug);
 
   return (
