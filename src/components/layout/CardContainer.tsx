@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
-import { Audiobook } from "@/lib/interface/Audiobook";
+import type { Card as CardType } from "@/lib/interface/Card";
 
-export function CardContainer({ audiobooks }: { audiobooks: Audiobook[] }) {
+export function CardContainer({ cards }: { cards: CardType[] }) {
   return (
     <div
       className={cn(
@@ -10,8 +10,14 @@ export function CardContainer({ audiobooks }: { audiobooks: Audiobook[] }) {
         "lg:grid-cols-4 lg:gap-x-4 lg:gap-y-8",
       )}
     >
-      {audiobooks.map((audiobook, index) => (
-        <Card key={index} audiobook={audiobook}/>
+      {cards.map((card, index) => (
+        <Card
+          key={index}
+          href={card?.href}
+          image={card?.image}
+          heading={card?.heading}
+          subHeading={card?.subHeading}
+        />
       ))}
     </div>
   );

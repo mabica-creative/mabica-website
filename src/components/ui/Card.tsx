@@ -1,23 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Audiobook } from "@/lib/interface/Audiobook";
+import type { Card } from "@/lib/interface/Card";
 
-export function Card({ audiobook }: { audiobook: Audiobook }) {
+export function Card({ heading, href, image, subHeading }: Card) {
   return (
-    <Link href={`/audiobooks/${audiobook?.slug}`}>
-      <div className="overflow-hidden rounded-xl mb-2 relative">
+    <Link href={href}>
+      <div className="overflow-hidden aspect-[4/6] rounded-xl mb-2 relative">
         <Image
-          className="w-full"
-          src="/audiobook.png"
+          className="h-full w-full object-cover"
+          src={image}
           alt="Audiobook image"
-          width="600"
-          height="350"
+          width="400"
+          height="400"
         />
       </div>
-      <h3 className="font-medium">The Book Of Cemy</h3>
-      <p className="line-clamp-1 opacity-80 -mt-1">
-        maka dia memulai petualangannya kembali dan menjadi seorang pahlawan
-      </p>
+      <h3 className="font-medium  line-clamp-1 ">{heading}</h3>
+      <p className="line-clamp-1 opacity-80 -mt-1">{subHeading}</p>
     </Link>
   );
 }
