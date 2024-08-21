@@ -1,3 +1,8 @@
-# Mabica Website
+# Mabica Website v1
 
-Just an/a website for mabica.
+Just a website for mabica.
+
+## Requared
+- The website is exis
+- Mabica Have landing page
+- Client can access audiobooks
