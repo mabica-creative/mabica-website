@@ -1,21 +1,26 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/Breadcrumb";
-import { CardContainer } from "@/components/layout/CardContainer";
-
 import { useAudiobooks } from "@/hooks/useAudiobooks";
 
+import { CardContainer } from "@/components/layout/CardContainer";
+import { AudiobooksNav } from "./_components/AudiobooksNav";
+
+import type { Audiobook as AudiobookType } from "@/lib/interface/Audiobook";
+import type { Card as CardType } from "@/lib/interface/Card";
+
 export default function AudiobooksPage() {
-  // Use the custom hook to get audiobooks data
-  const { audiobooks, loading, error } = useAudiobooks();
+  const { data, loading, error } = useAudiobooks();
+  const cards: CardType[] = data.map(
+    ({ slug, image, title, synopsis }: AudiobookType) => {
+      return {
+        href: `/audiobooks/${slug}`,
+        image,
+        heading: title,
+        subHeading: synopsis,
+      };
+    },
+  );
 
   return (
     <>
@@ -25,30 +30,32 @@ export default function AudiobooksPage() {
         </h1>
       ) : error ? (
         <h1 className="container h-screen flex justify-center items-center">
-          {error}
+          Error: {error.message}
         </h1>
-      ) : (
-        <main
-          id="audiobook"
-          className={cn("container pt-20 pb-28 scroll-mt-14")}
+      ) : !!data.length ? (
+        <div
+          className={cn(
+            "pt-16 space-y-2 scroll-mt-14",
+            "lg:space-y-4 lg:py-10 lg:pt-28",
+          )}
         >
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Audiobooks</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-
-          <h2 className={cn("text-lg mb-2 font-semibold", "lg:mb-4 lg:text-3xl")}>
-            #Audiobooks
-          </h2>
-          <CardContainer audiobooks={audiobooks} />
-        </main>
+          <AudiobooksNav />
+          <main className="container">
+            <h1
+              className={cn(
+                "text-lg font-semibold mb-2",
+                "lg:text-3xl lg:mb-4",
+              )}
+            >
+              #Audiobooks
+            </h1>
+            <CardContainer cards={cards} />
+          </main>
+        </div>
+      ) : (
+        <h1 className="container h-screen flex justify-center items-center">
+          No Audiobooks Found
+        </h1>
       )}
     </>
   );

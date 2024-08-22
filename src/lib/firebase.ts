@@ -2,13 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDWMqL_pezFxENIj93Q3HEN9ylpxGlkzoc",
-  authDomain: "onee-18004.firebaseapp.com",
-  projectId: "onee-18004",
-  storageBucket: "onee-18004.appspot.com",
-  messagingSenderId: "775189859692",
-  appId: "1:775189859692:web:17bdc489aaa889aaf1b749",
-  measurementId: "G-R08WEZBPBK"
+  apiKey: "AIzaSyCXstNG1x25fcZKlsx475ng0IhfA2O4X2U",
+  authDomain: "mabica-a916a.firebaseapp.com",
+  projectId: "mabica-a916a",
+  storageBucket: "mabica-a916a.appspot.com",
+  messagingSenderId: "332819317198",
+  appId: "1:332819317198:web:0a569d0eef61733e2e2b9f"
 };
 
 const app = initializeApp(firebaseConfig);
