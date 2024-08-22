@@ -1,29 +1,31 @@
-
 import { db } from "@/lib/firebase";
-import { Audiobook } from "./useAudiobooks"; // Ensure the correct path for the Audiobook type
-import { doc, getDoc, DocumentSnapshot } from "firebase/firestore";
+import { Audiobook } from "@/lib/interface/Audiobook";
+import {
+  doc,
+  getDoc,
+  DocumentSnapshot,
+  DocumentData,
+} from "firebase/firestore";
 import { useState, useEffect } from "react";
 
-// Function to fetch a single audiobook by its slug
-async function getAudiobook(slug: string): Promise<Audiobook | false> {
+async function getAudiobook(audiobookSlug: string): Promise<Audiobook | null> {
   try {
-    const docRef = doc(db, "audiobooks", slug);
-    const docSnap: DocumentSnapshot = await getDoc(docRef);
+    const docRef = doc(db, "audiobooks", audiobookSlug);
+    const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
 
-    if (!docSnap.exists()) {
-      return false;
+    if (!docSnap.exists() || docSnap.data().deleted) {
+      return null;
     }
 
     return docSnap.data() as Audiobook;
   } catch (error) {
     console.error("Error fetching audiobook: ", error);
-    return false;
+    return null;
   }
 }
 
-// Custom hook to fetch and manage audiobook data
-export function useAudiobook(audiobookId: string) {
-  const [book, setBook] = useState<Audiobook | undefined>(undefined);
+function useAudiobook(audiobookSlug: string) {
+  const [data, setData] = useState<Audiobook | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,24 +34,23 @@ export function useAudiobook(audiobookId: string) {
       setLoading(true);
       setError(null);
       try {
-        const data = await getAudiobook(audiobookId);
-        if (data) {
-          setBook(data);
+        const result = await getAudiobook(audiobookSlug);
+        if (result) {
+          setData(result);
         } else {
           setError("Audiobook not found.");
         }
-      } catch (error) {
-        setError("Error fetching audiobook: " + error);
+      } catch (err) {
+        setError("Error fetching audiobook: " + (err as Error).message);
       } finally {
         setLoading(false);
       }
     };
 
     fetchBook();
-  }, [audiobookId]);
+  }, [audiobookSlug]);
 
-  return { book, loading, error };
+  return { data, loading, error };
 }
 
-export { getAudiobook };
-
+export { useAudiobook };
