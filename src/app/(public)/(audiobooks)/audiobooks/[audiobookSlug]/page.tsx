@@ -30,8 +30,8 @@ export default function AudiobookPage({
       ) : data ? (
         <div
           className={cn(
-            "pt-16 lg:py-10 space-y-2 scroll-mt-14",
-            "lg:space-y-4",
+            "pt-16 space-y-2 scroll-mt-14",
+            "lg:space-y-4 lg:py-10 lg:pt-28",
           )}
         >
           <AudiobookNav audiobook={data?.title} />
@@ -40,7 +40,7 @@ export default function AudiobookPage({
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex flex-col gap-2 lg:w-4/12">
                 <Image
-                  className="w-full h-full aspect-[9/12] object-cover rounded-xl"
+                  className="w-full aspect-[9/12] object-cover rounded-xl"
                   src={data?.image}
                   alt="Audiobook image"
                   width="400"

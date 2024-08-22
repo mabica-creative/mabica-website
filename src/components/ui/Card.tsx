@@ -5,7 +5,7 @@ import type { Card } from "@/lib/interface/Card";
 export function Card({ heading, href, image, subHeading }: Card) {
   return (
     <Link href={href}>
-      <div className="overflow-hidden aspect-[4/6] rounded-xl mb-2 relative">
+      <div className="overflow-hidden aspect-[9/12] rounded-xl mb-2 relative">
         <Image
           className="h-full w-full object-cover"
           src={image}

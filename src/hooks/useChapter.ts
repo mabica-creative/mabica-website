@@ -38,7 +38,7 @@ function useChapter(chapterSlug: string) {
         if (result) {
           setData(result);
         } else {
-          setError("Audiobook not found.");
+          setError("Chapter not found.");
         }
       } catch (err) {
         setError("Error fetching audiobook: " + (err as Error).message);

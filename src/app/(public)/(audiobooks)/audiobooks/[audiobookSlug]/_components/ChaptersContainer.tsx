@@ -28,7 +28,7 @@ export function ChaptersContainer({ audiobookSlug }: ChaptersContainer) {
           <div className="grid gap-2 lg:gap-4 grid-cols-2 lg:grid-cols-4">
             {data.map((chapter) => (
               <Link
-                href={`/audiobooks/${chapter?.audiobook_id}`}
+                href={`/audiobooks/${chapter?.audiobook_id}/${chapter?.slug}`}
                 key={chapter?.slug}
               >
                 <Button

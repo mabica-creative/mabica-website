@@ -35,8 +35,8 @@ export default function AudiobooksPage() {
       ) : !!data.length ? (
         <div
           className={cn(
-            "pt-16 lg:py-10 space-y-2 scroll-mt-14",
-            "lg:space-y-4",
+            "pt-16 space-y-2 scroll-mt-14",
+            "lg:space-y-4 lg:py-10 lg:pt-28",
           )}
         >
           <AudiobooksNav />

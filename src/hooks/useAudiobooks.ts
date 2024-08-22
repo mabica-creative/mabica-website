@@ -16,7 +16,14 @@ async function getAudiobooks(): Promise<Audiobook[]> {
         ...(doc.data() as Audiobook),
       }))
       .filter((audiobook: Audiobook) => !audiobook.deleted)
-      .sort((a, b) => a.posted - b.posted);
+      .sort((a, b) => {
+        // Pastikan 'a' dan 'b' didefinisikan
+        if (!a || !b || !a.posted || !b.posted) {
+          return 0; // Tidak melakukan perubahan urutan jika salah satu tidak didefinisikan
+        }
+
+        return a.posted - b.posted;
+      });
 
     // console.log(audiobooks);
     return audiobooks;
