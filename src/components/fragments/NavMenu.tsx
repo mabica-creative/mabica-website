@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { X, AlignRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { dataNavbar } from "@/lib/data/dataNavbar";
 
-const NavMenu = () => {
+interface NavMenuProps {
+  sessionImage?: string;
+}
+
+const NavMenu = ({ sessionImage }: NavMenuProps) => {
   const [isNavMenuOpen, setIsNavMenuOpen] = useState<boolean>(false);
 
   return (
@@ -26,9 +31,21 @@ const NavMenu = () => {
               </Link>
             ))}
           </nav>
-          <Link href="/">
-            <Button className="w-full self-end">Get Story</Button>
-          </Link>
+          {sessionImage ? (
+            <Link href="/profile">
+              <Image
+                className="rounded-full border-2 border-primary"
+                src={sessionImage}
+                alt="Picture of the author"
+                width={36}
+                height={36}
+              />
+            </Link>
+          ) : (
+            <Link href="/signin">
+              <Button className="w-full self-end">Sign in</Button>
+            </Link>
+          )}
         </div>
       </div>
       <button

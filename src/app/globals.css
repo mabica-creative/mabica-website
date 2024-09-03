@@ -62,9 +62,6 @@
 @layer base {
   * {
     @apply border-border;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
     /*    box-sizing: border-box;
     background: rgb(0 100 0 / 0.6);
 */
