@@ -6,12 +6,8 @@ export async function middleware(req: NextRequest) {
   const session = await auth();
 
   // proteksi login
-  if (
-    !session &&
-    (req.nextUrl.pathname.startsWith("/profile") ||
-      req.nextUrl.pathname.startsWith("/dashboard"))
-  ) {
-    const newUrl = new URL("/signin", req.nextUrl.origin);
+  if (!session && req.nextUrl.pathname.startsWith("/dashboard")) {
+    const newUrl = new URL("/sign-in", req.nextUrl.origin);
     return NextResponse.redirect(newUrl);
   }
 
@@ -21,12 +17,12 @@ export async function middleware(req: NextRequest) {
       session.user.email !== "osiic.offcl@gmail.com") &&
     req.nextUrl.pathname.startsWith("/dashboard")
   ) {
-    const newUrl = new URL("/profile", req.nextUrl.origin);
+    const newUrl = new URL("/sign-out", req.nextUrl.origin); // Ganti dengan halaman akses ditolak
     return NextResponse.redirect(newUrl);
   }
 
-  if (session && req.nextUrl.pathname.startsWith("/signin")) {
-    const newUrl = new URL("/profile", req.nextUrl.origin);
+  if (session && req.nextUrl.pathname.startsWith("/sign-in")) {
+    const newUrl = new URL("/dashboard", req.nextUrl.origin); // Arahkan ke dashboard atau halaman lain
     return NextResponse.redirect(newUrl);
   }
 

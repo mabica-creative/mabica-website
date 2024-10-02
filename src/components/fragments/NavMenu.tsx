@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 import { X, AlignRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { dataNavbar } from "@/lib/data/dataNavbar";
@@ -32,7 +33,7 @@ const NavMenu = ({ sessionImage }: NavMenuProps) => {
             ))}
           </nav>
           {sessionImage ? (
-            <Link href="/profile">
+            <Link href="/dashboard">
               <Image
                 className="rounded-full border-2 border-primary"
                 src={sessionImage}
@@ -42,8 +43,8 @@ const NavMenu = ({ sessionImage }: NavMenuProps) => {
               />
             </Link>
           ) : (
-            <Link href="/signin">
-              <Button className="w-full self-end">Sign in</Button>
+            <Link href="/audiobooks">
+              <Button className="w-full self-end">Heard Story Now</Button>
             </Link>
           )}
         </div>
