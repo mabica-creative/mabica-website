@@ -35,8 +35,8 @@ model DetailAudiobook {
   voiceActor  String?
   status      String?
 
-  audiobook   Audiobook @relation(fields: [audiobookId], references: [id])
-  audiobookId Int       @unique
+  audiobook      Audiobook @relation(fields: [audiobookSlug], references: [slug])
+  audiobookSlug String @unique
 }
 
 model Chapter {
@@ -48,8 +48,8 @@ model Chapter {
   updatedAt     DateTime  @updatedAt
 
   detail        DetailChapter? // One-to-one ke DetailChapter 
-  audiobook     Audiobook @relation(fields: [audiobookId], references: [id])
-  audiobookId   Int       @unique
+  audiobook      Audiobook @relation(fields: [audiobookSlug], references: [slug])
+  audiobookSlug String @unique
 }
 
 model DetailChapter {
@@ -57,8 +57,8 @@ model DetailChapter {
   content   String
   audioUrl  String
 
-  chapter   Chapter @relation(fields: [chapterId], references: [id])
-  chapterId Int     @unique
+  chapter   Chapter @relation(fields: [chapterSlug], references: [slug])
+  chapterSlug String @unique
 }
 
 model Account {

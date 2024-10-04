@@ -2,7 +2,12 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const data = await prisma.audiobook.findMany({});
+  // Filter untuk menampilkan data yang `deleted` bernilai `false`
+  const data = await prisma.audiobook.findMany({
+    where: {
+      deleted: false,
+    },
+  });
   return NextResponse.json(data);
 }
 
