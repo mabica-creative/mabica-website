@@ -12,7 +12,12 @@ export async function GET(
     },
     include: {
       detail: true,
-      chapters: true,
+      chapters: {
+        where: { deleted: false },
+        orderBy: {
+          chapterNumber: "asc", // urutkan berdasarkan chapterNumber dari yang terkecil
+        },
+      },
     },
   });
 
