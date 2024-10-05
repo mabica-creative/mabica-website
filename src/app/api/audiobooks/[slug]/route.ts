@@ -51,55 +51,63 @@ export async function DELETE(
   return NextResponse.json(data);
 }
 
-export async function PUT(
+export async function PATCH(
   request: Request,
-  { params: { slug } }: { params: { slug: string } },
+  { params: { slug: audiobookSlug } }: { params: { slug: string } },
 ) {
-  let data, body;
   try {
-    body = await request.json();
-  } catch (err) {
-    // Cek apakah body kosong
-    return NextResponse.json(
-      { error: "Request body is empty." },
-      { status: 400 },
-    );
-  }
-  // Cek apakah salah satu field wajib kosong
-  if (!body.imageUrl && !body.title && !body.slug && !body.synopsis) {
-    return NextResponse.json(
-      {
-        error:
-          "Data incomplete. At least one field (imageUrl, title, slug, synopsis) must be present.",
-      },
-      { status: 400 },
-    );
-  }
+    const body = await request.json();
 
-  try {
-    data = await prisma.audiobook.update({
-      where: {
-        slug,
-        deleted: false,
-      },
-      include: {
-        detail: true,
-      },
-      data: {
-        imageUrl: body.imageUrl || undefined, // Update jika ada
-        title: body.title || undefined,
-        slug: body.slug || undefined,
-        synopsis: body.synopsis || undefined,
-      },
-    });
-  } catch (err) {
-    return NextResponse.json(
-      {
-        error: "Audiobook is not found",
-      },
-      { status: 400 },
-    );
-  }
+    // Validasi: cek jika ID tidak tersedia
+    if (!body.id) {
+      return NextResponse.json(
+        { error: "Audiobook ID is required" },
+        { status: 400 },
+      );
+    }
 
-  return NextResponse.json({ data, slug, body });
+    try {
+      const upAudiobook = await prisma.audiobook.update({
+        where: { slug: audiobookSlug, deleted: false },
+        data: {
+          ...(body.title && { title: body.title }),
+          ...(body.slug && { slug: body.slug }),
+          ...(body.imageUrl && { imageUrl: body.imageUrl }),
+          ...(body.synopsis && { synopsis: body.synopsis }),
+        },
+      });
+
+      const upDetailAudiobook = await prisma.detailAudiobook.upsert({
+        where: { audiobookId: +body.id },
+        update: {
+          ...(body.author && { author: body.author }),
+          ...(body.editor && { editor: body.editor }),
+          ...(body.genre && { genre: body.genre }),
+          ...(body.status && { status: body.status }),
+          ...(body.voiceActor && { voiceActor: body.voiceActor }),
+        },
+        create: {
+          author: body.author || null,
+          editor: body.editor || null,
+          genre: body.genre || null,
+          status: body.status || null,
+          voiceActor: body.voiceActor || null,
+          audiobookId: +body.id,
+        },
+      });
+      const data = { ...upAudiobook, detail: upDetailAudiobook };
+      return NextResponse.json(data);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error: "Update failed or Audiobook not found or already deleted.",
+          details: error,
+        },
+        { status: 400 },
+      );
+    }
+  } catch (error) {
+    console.error("Invalid JSON format:", error);
+    return NextResponse.json({ error: "Invalid JSON format" }, { status: 400 });
+  }
 }
