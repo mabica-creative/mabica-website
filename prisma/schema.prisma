@@ -60,6 +60,7 @@ model DetailChapter {
   chapterId Int     @unique // Kunci asing ke Chapter
   chapter   Chapter @relation(fields: [chapterId], references: [id]) // Relasi dengan Chapter
 }
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String  @map("user_id")

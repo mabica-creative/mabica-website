@@ -5,7 +5,7 @@ export default async function DashboardPage() {
 
   return (
     <form
-      className="flex h-screen container justify-center items-center flex-col gap-2"
+      className="flex pb-40 container justify-center items-center flex-col gap-2"
       action={async () => {
         "use server";
         await signOut();

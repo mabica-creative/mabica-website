@@ -7,6 +7,7 @@ export async function middleware(req: NextRequest) {
 
   // proteksi login
   if (!session && req.nextUrl.pathname.startsWith("/dashboard")) {
+    console.log(session);
     const newUrl = new URL("/sign-in", req.nextUrl.origin);
     return NextResponse.redirect(newUrl);
   }
