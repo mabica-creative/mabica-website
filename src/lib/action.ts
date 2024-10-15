@@ -9,3 +9,8 @@ export async function getOneAudiobook(slug: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/audiobooks/${slug}`);
   return await res.json()
 }
+
+export async function getOneChapter(slug: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/chapters/${slug}`);
+  return await res.json()
+}
