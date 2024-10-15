@@ -1,14 +1,13 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+
+import { getAllAudiobooks } from "@/lib/action";
 import { Audiobook } from "@prisma/client";
 
 export default async function AudibooksPage() {
-  const datas = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/audiobooks`,
-  );
-
-  const audiobooks: Audiobook[] = await datas.json();
+  const audiobooks: Audiobook[] = await getAllAudiobooks();
   return (
-    <section className="container min-h-screen ">
+    <section className="container min-h-screen">
       <div className="flex justify-between items-center pb-4">
         <h1>Audiobooks</h1>
         <Button>Create Audibook</Button>
@@ -41,9 +40,11 @@ export default async function AudibooksPage() {
                 {data?.synopsis}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-right space-x-2">
-                <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                  View
-                </button>
+                <Link href={`/dashboard/audiobooks/${data?.slug}`}>
+                  <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    View
+                  </button>
+                </Link>
                 <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                   Edit
                 </button>
