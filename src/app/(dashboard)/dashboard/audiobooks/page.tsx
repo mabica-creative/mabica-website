@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
-import { getAllAudiobooks } from "@/lib/action";
+import { getAllAudiobooks, deleteAudiobook } from "@/lib/action";
 import { Audiobook } from "@prisma/client";
 
 export default async function AudibooksPage() {
   const audiobooks: Audiobook[] = await getAllAudiobooks();
+
   return (
     <section className="container min-h-screen">
       <div className="flex justify-between items-center pb-4">
@@ -48,9 +49,11 @@ export default async function AudibooksPage() {
                 <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                   Edit
                 </button>
-                <button className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                  Delete
-                </button>
+                <form action={async () => { "use server"; deleteAudiobook(data?.slug) }}>
+                  <button type="submit" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                    Delete
+                  </button>
+                </form>
               </td>
             </tr>
           ))}
