@@ -1,21 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 import { Audiobook, DetailAudiobook, Chapter } from "@prisma/client";
-import { getOneAudiobook } from "@/lib/action";
+import { getOneAudiobook, deleteAudiobook } from "@/lib/action";
 
 interface DataInterfaceAudiobook extends Audiobook {
   detail: DetailAudiobook;
   chapters?: Chapter[];
 }
 
+export const dynamic = "force-dynamic";
 export default async function DetailAudiobookPage({
   params: { audiobookSlug: slug },
 }: {
   params: { audiobookSlug: string };
 }) {
   const data: DataInterfaceAudiobook = await getOneAudiobook(slug);
+  if (!data || !data.detail || !data.chapters) {
+    return redirect("/404");
+  }
 
   return (
     <section className="container min-h-screen">
@@ -31,9 +36,20 @@ export default async function DetailAudiobookPage({
           <button className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition">
             Edit
           </button>
-          <button className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition">
-            Delete
-          </button>
+          <form
+            action={async () => {
+              "use server";
+              await deleteAudiobook(data?.slug);
+              return redirect("/dashboard/audiobooks");
+            }}
+          >
+            <button
+              type="submit"
+              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </form>
         </div>
       </div>
       <div className=" mx-auto p-4">
@@ -109,9 +125,6 @@ export default async function DetailAudiobookPage({
                   </Link>
                   <button className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition">
                     Edit
-                  </button>
-                  <button className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition">
-                    Delete
                   </button>
                 </div>
               </li>

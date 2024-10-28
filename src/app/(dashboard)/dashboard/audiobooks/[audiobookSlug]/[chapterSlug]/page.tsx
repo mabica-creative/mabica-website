@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 import { Chapter, DetailChapter } from "@prisma/client";
-import { getOneChapter } from "@/lib/action";
+import { getOneChapter, deleteChapter } from "@/lib/action";
 
 interface DataInterfaceChapter extends Chapter {
   detail: DetailChapter;
@@ -15,6 +16,9 @@ export default async function DetailChapterPage({
   params: { chapterSlug: string };
 }) {
   const data: DataInterfaceChapter = await getOneChapter(slug);
+  if (!data || !data.slug) {
+    return redirect("/404");
+  }
   const audiobookSlug = data.slug.split("-").slice(0, -1).join("-");
 
   return (
@@ -31,9 +35,20 @@ export default async function DetailChapterPage({
           <button className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition">
             Edit
           </button>
-          <button className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition">
-            Delete
-          </button>
+          <form
+            action={async () => {
+              "use server";
+              await deleteChapter(data?.slug);
+              return redirect(`/dashboard/audiobooks`);
+            }}
+          >
+            <button
+              type="submit"
+              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </form>
         </div>
       </div>
       <div className="max-w-4xl mx-auto p-4">
