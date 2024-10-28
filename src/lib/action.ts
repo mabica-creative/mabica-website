@@ -1,3 +1,8 @@
+"use server"
+
+// import { Audiobook } from "@prisma/client";
+// import { redirect } from "next/navigation";
+
 export async function getAllAudiobooks() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/audiobooks`,

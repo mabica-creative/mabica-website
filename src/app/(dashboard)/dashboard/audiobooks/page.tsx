@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 
 import { getAllAudiobooks } from "@/lib/action";
 import { Audiobook } from "@prisma/client";
+import { DialogCreateAudiobook } from "./_components/DialogCreateAudiobook";
 
 export default async function AudibooksPage() {
   const audiobooks: Audiobook[] = await getAllAudiobooks();
@@ -11,7 +12,8 @@ export default async function AudibooksPage() {
     <section className="container min-h-screen">
       <div className="flex justify-between items-center pb-4">
         <h1>Audiobooks</h1>
-        <Button>Create Audibook</Button>
+
+        <DialogCreateAudiobook />
       </div>
       <table className="min-w-full border-collapse border border-gray-200">
         <thead>
@@ -42,13 +44,9 @@ export default async function AudibooksPage() {
               </td>
               <td className="border border-gray-300 px-4 py-2 text-right space-x-2">
                 <Link href={`/dashboard/audiobooks/${data?.slug}`}>
-                  <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    Details
-                  </button>
+                  <Button variant="outline">Details</Button>
                 </Link>
-                <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
-                  Edit
-                </button>
+                <Button variant="outline">Edit</Button>
               </td>
             </tr>
           ))}

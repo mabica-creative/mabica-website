@@ -56,6 +56,49 @@ export async function DELETE(
   return NextResponse.json(data);
 }
 
+
+export async function POST(
+  request: Request,
+  { params: { slug: audiobookSlug } }: { params: { slug: string } },
+) {
+  try {
+    const body = await request.json();
+
+    // Validasi: cek jika ID tidak tersedia
+    if (!body.id) {
+      return NextResponse.json(
+        { error: "Audiobook ID is required" },
+        { status: 400 },
+      );
+    }
+
+    try {
+      const Audiobook = await prisma.audiobook.create({
+        data: {
+          ...(body.title && { title: body.title }),
+          ...(body.slug && { slug: body.slug }),
+          ...(body.imageUrl && { imageUrl: body.imageUrl }),
+          ...(body.synopsis && { synopsis: body.synopsis }),
+        },
+      });
+
+      const data = Audiobook;
+      return NextResponse.json(data);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error: "Update failed or Audiobook not found or already deleted.",
+          details: error,
+        },
+        { status: 400 },
+      );
+    }
+  } catch (error) {
+    console.error("Invalid JSON format:", error);
+    return NextResponse.json({ error: "Invalid JSON format" }, { status: 400 });
+  }
+}
+
 export async function PATCH(
   request: Request,
   { params: { slug: audiobookSlug } }: { params: { slug: string } },
