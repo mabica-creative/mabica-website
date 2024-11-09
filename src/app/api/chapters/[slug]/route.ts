@@ -1,6 +1,17 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+function generateRandomString(length: number) {
+  const charset =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const values = crypto.getRandomValues(new Uint8Array(length)); // Menggunakan Node.js crypto
+  for (let i = 0; i < values.length; i++) {
+    result += charset[values[i] % charset.length];
+  }
+  return result;
+}
+
 export async function GET(
   _: Request,
   { params: { slug } }: { params: { slug: string } },
@@ -35,7 +46,7 @@ export async function DELETE(
     where: {
       slug,
     },
-    data: { deleted: true },
+    data: { deleted: true, slug: generateRandomString(32) },
   });
 
   if (!data) {
@@ -58,42 +69,76 @@ export async function PATCH(
     const body = await request.json();
 
     // Validasi: cek jika ID tidak tersedia
-    if (!body.chapterId && !body.audiobookId) {
+    if (!body.chapterId || !body.audiobookId) {
       return NextResponse.json(
         { error: "Chapter ID and Audiobook ID are required" },
         { status: 400 },
       );
     }
 
+    // Validasi nilai lainnya
+    if (body.chapterNumber && typeof body.chapterNumber !== "number") {
+      return NextResponse.json(
+        { error: "Chapter number must be a number" },
+        { status: 400 },
+      );
+    }
+    if (body.slug && typeof body.slug !== "string") {
+      return NextResponse.json(
+        { error: "Slug must be a string" },
+        { status: 400 },
+      );
+    }
+    if (body.audiobookId && typeof body.audiobookId !== "number") {
+      return NextResponse.json(
+        { error: "Audiobook ID must be a number" },
+        { status: 400 },
+      );
+    }
+
     try {
-      const upChapter = await prisma.chapter.update({
-        where: { slug: chapterSlug, deleted: false },
-        data: {
-          ...(body.chapterNumber && { chapterNumber: body.chapterNumber }),
-          ...(body.slug && { slug: body.slug }),
-          ...(body.audiobookId && { audiobookId: +body.audiobookId }),
-        },
-      });
+      let updatedChapter, updatedDetailChapter;
 
-      const upDetailChapter = await prisma.detailChapter.upsert({
-        where: { chapterId: +body.chapterId },
-        update: {
-          ...(body.content && { content: body.content }),
-          ...(body.audioUrl && { audioUrl: body.audioUrl }),
-        },
-        create: {
-          content: body.content || null,
-          audioUrl: body.audioUrl || null,
-          chapterId: +body.chapterId,
-        },
-      });
+      // Update chapter jika terdapat data yang relevan
+      if (body.chapterNumber || body.slug || body.audiobookId) {
+        updatedChapter = await prisma.chapter.update({
+          where: { slug: chapterSlug, deleted: false },
+          data: {
+            ...(body.chapterNumber && { chapterNumber: body.chapterNumber }),
+            ...(body.slug && { slug: body.slug }),
+            ...(body.audiobookId && { audiobookId: +body.audiobookId }),
+          },
+        });
+      }
 
-      const data = { ...upChapter, detail: upDetailChapter };
-      return NextResponse.json(data);
+      // Upsert detailChapter jika terdapat data yang relevan
+      if (body.content || body.audioUrl) {
+        updatedDetailChapter = await prisma.detailChapter.upsert({
+          where: { chapterId: +body.chapterId },
+          update: {
+            ...(body.content && { content: body.content }),
+            ...(body.audioUrl && { audioUrl: body.audioUrl }),
+          },
+          create: {
+            content: body.content || null,
+            audioUrl: body.audioUrl || null,
+            chapterId: +body.chapterId,
+          },
+        });
+      }
+
+      // Menggabungkan data hasil update untuk dikembalikan sebagai respons
+      const data = {
+        ...(updatedChapter && { chapter: updatedChapter }),
+        ...(updatedDetailChapter && { detail: updatedDetailChapter }),
+      };
+
+      return NextResponse.json(data || { message: "No data updated" });
     } catch (error) {
+      console.error("Database operation failed:", error);
       return NextResponse.json(
         {
-          error: "Update failed or Chapter not found or already eleted.",
+          error: "Update failed or Chapter not found or already deleted.",
           details: error,
         },
         { status: 400 },
@@ -102,7 +147,7 @@ export async function PATCH(
   } catch (error) {
     console.error("Invalid JSON format:", error);
     return NextResponse.json(
-      { error: "Invalid JSON format or Absulutly error" },
+      { error: "Invalid JSON format or other error occurred" },
       { status: 400 },
     );
   }

@@ -1,49 +1,40 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
-import { useChapters } from "@/hooks/useChapters";
+import { Chapter } from "@prisma/client";
 
-interface ChaptersContainer {
+export async function ChaptersContainer({
+  chapters,
+  audiobookSlug,
+}: {
+  chapters?: Chapter[];
   audiobookSlug: string;
-}
-
-export function ChaptersContainer({ audiobookSlug }: ChaptersContainer) {
-  const { data, loading, error } = useChapters(audiobookSlug);
-
+}) {
+  if (!chapters) {
+    return (
+      <>
+        <h1 className="container h-screen flex justify-center items-center">
+          Have no chapter, Sorry!!
+        </h1>
+      </>
+    );
+  }
   return (
-    <>
-      {loading ? (
-        <h1 className="container h-screen flex justify-center items-center">
-          Loading...
-        </h1>
-      ) : error ? (
-        <h1 className="container h-screen flex justify-center items-center">
-          Error: {error.message}
-        </h1>
-      ) : !!data.length ? (
-        <section id="about" className="container space-y-4 py-5">
-          <h2 className="text-xl font-semibold"># Chapters</h2>
-          <div className="grid gap-2 lg:gap-4 grid-cols-2 lg:grid-cols-4">
-            {data.map((chapter) => (
-              <Link
-                href={`/audiobooks/${chapter?.audiobook_id}/${chapter?.slug}`}
-                key={chapter?.slug}
-              >
-                <Button
-                  variant="outline"
-                  className="lg:px-4 w-full lg:text-lg "
-                >{`Chapter - ${chapter?.chapter}`}</Button>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : (
-        <h1 className="container h-screen flex justify-center items-center">
-          No Audiobooks Found
-        </h1>
-      )}
-    </>
+    <section id="about" className="container space-y-4 py-5">
+      <h2 className="text-xl font-semibold"># Chapters</h2>
+      <div className="grid gap-2 lg:gap-4 grid-cols-2 lg:grid-cols-4">
+        {chapters.map((chapter: Chapter) => (
+          <Link
+            href={`/audiobooks/${audiobookSlug}/${chapter?.slug}`}
+            key={chapter?.slug}
+          >
+            <Button
+              variant="outline"
+              className="lg:px-4 w-full lg:text-lg "
+            >{`Chapter - ${chapter?.chapterNumber}`}</Button>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }

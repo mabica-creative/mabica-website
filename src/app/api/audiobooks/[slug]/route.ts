@@ -56,49 +56,6 @@ export async function DELETE(
   return NextResponse.json(data);
 }
 
-
-export async function POST(
-  request: Request,
-  { params: { slug: audiobookSlug } }: { params: { slug: string } },
-) {
-  try {
-    const body = await request.json();
-
-    // Validasi: cek jika ID tidak tersedia
-    if (!body.id) {
-      return NextResponse.json(
-        { error: "Audiobook ID is required" },
-        { status: 400 },
-      );
-    }
-
-    try {
-      const Audiobook = await prisma.audiobook.create({
-        data: {
-          ...(body.title && { title: body.title }),
-          ...(body.slug && { slug: body.slug }),
-          ...(body.imageUrl && { imageUrl: body.imageUrl }),
-          ...(body.synopsis && { synopsis: body.synopsis }),
-        },
-      });
-
-      const data = Audiobook;
-      return NextResponse.json(data);
-    } catch (error) {
-      return NextResponse.json(
-        {
-          error: "Update failed or Audiobook not found or already deleted.",
-          details: error,
-        },
-        { status: 400 },
-      );
-    }
-  } catch (error) {
-    console.error("Invalid JSON format:", error);
-    return NextResponse.json({ error: "Invalid JSON format" }, { status: 400 });
-  }
-}
-
 export async function PATCH(
   request: Request,
   { params: { slug: audiobookSlug } }: { params: { slug: string } },
@@ -106,7 +63,7 @@ export async function PATCH(
   try {
     const body = await request.json();
 
-    // Validasi: cek jika ID tidak tersedia
+    // Validasi ID
     if (!body.id) {
       return NextResponse.json(
         { error: "Audiobook ID is required" },
@@ -114,8 +71,16 @@ export async function PATCH(
       );
     }
 
-    try {
-      const upAudiobook = await prisma.audiobook.update({
+    // Log data yang akan dikirim ke Prisma
+    console.log("Updating audiobook with slug:", audiobookSlug);
+    console.log("Audiobook data:", body);
+
+    let updatedAudiobook = null;
+    let updatedDetailAudiobook = null;
+
+    // Perbarui data di tabel audiobook
+    if (body.title || body.slug || body.imageUrl || body.synopsis) {
+      updatedAudiobook = await prisma.audiobook.update({
         where: { slug: audiobookSlug, deleted: false },
         data: {
           ...(body.title && { title: body.title }),
@@ -124,9 +89,18 @@ export async function PATCH(
           ...(body.synopsis && { synopsis: body.synopsis }),
         },
       });
+    }
 
-      const upDetailAudiobook = await prisma.detailAudiobook.upsert({
-        where: { audiobookId: +body.id },
+    // Perbarui atau buat data di tabel detailAudiobook
+    if (
+      body.author ||
+      body.editor ||
+      body.genre ||
+      body.status ||
+      body.voiceActor
+    ) {
+      updatedDetailAudiobook = await prisma.detailAudiobook.upsert({
+        where: { audiobookId: Number(body.id) },
         update: {
           ...(body.author && { author: body.author }),
           ...(body.editor && { editor: body.editor }),
@@ -143,19 +117,21 @@ export async function PATCH(
           audiobookId: +body.id,
         },
       });
-      const data = { ...upAudiobook, detail: upDetailAudiobook };
-      return NextResponse.json(data);
-    } catch (error) {
+    }
+
+    if (!updatedAudiobook && !updatedDetailAudiobook) {
       return NextResponse.json(
-        {
-          error: "Update failed or Audiobook not found or already deleted.",
-          details: error,
-        },
+        { error: "Update failed or Audiobook not found or already deleted." },
         { status: 400 },
       );
     }
+
+    return NextResponse.json({ updatedAudiobook, updatedDetailAudiobook });
   } catch (error) {
-    console.error("Invalid JSON format:", error);
-    return NextResponse.json({ error: "Invalid JSON format" }, { status: 400 });
+    console.error("Error in PATCH request:", error);
+    return NextResponse.json(
+      { error: "Update failed or invalid request.", details: error },
+      { status: 400 },
+    );
   }
 }

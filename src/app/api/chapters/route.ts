@@ -6,13 +6,7 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // Validasi: cek jika body kosong atau ada field yang tidak terisi
-    const requiredFields = [
-      "chapterNumber",
-      "slug",
-      "audiobookId",
-      "content",
-      "audioUrl",
-    ];
+    const requiredFields = ["chapterNumber", "slug"];
     for (const field of requiredFields) {
       if (!body[field]) {
         return NextResponse.json(
@@ -40,14 +34,7 @@ export async function POST(request: Request) {
         chapterNumber: +body.chapterNumber,
         slug: body.slug,
         audiobookId: +body.audiobookId,
-        detail: {
-          create: {
-            content: body.content,
-            audioUrl: body.audioUrl,
-          },
-        },
       },
-      include: { detail: true },
     });
 
     // Keluarkan hasil

@@ -29,11 +29,11 @@ model Audiobook {
 
 model DetailAudiobook {
   id          Int       @id @default(autoincrement())
-  author      String?
-  editor      String?
-  genre       String?
-  voiceActor  String?
-  status      String?
+  author      String
+  editor      String
+  genre       String
+  voiceActor  String
+  status      String
 
   audiobookId Int       @unique // Kunci asing ke Audiobook
   audiobook   Audiobook @relation(fields: [audiobookId], references: [id]) // Relasi dengan Audiobook

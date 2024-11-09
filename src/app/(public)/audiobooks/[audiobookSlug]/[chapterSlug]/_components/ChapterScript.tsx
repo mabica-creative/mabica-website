@@ -7,7 +7,7 @@ const ChapterScript = ({ script }: ChapterScriptProps) => {
     <div className="container space-y-2 py-2 opacity-80">
       <hr />
       <div>
-        {script.split("\\n").map((item, index) => (
+        {script?.split("\\n").map((item, index) => (
           <p key={index}>
             {item}
             <br />

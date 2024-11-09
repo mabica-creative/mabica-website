@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 
 import { getAllAudiobooks } from "@/lib/action";
@@ -36,8 +37,14 @@ export default async function AudibooksPage() {
               <td className="border border-gray-300 px-4 py-2">
                 {data?.title}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {data?.imageUrl}
+              <td className="border border-gray-300  px-4 py-2">
+                <Image
+                  src={data?.imageUrl}
+                  alt={data?.title}
+                  width={100}
+                  height={100}
+                  className="bg-green-500 m-auto aspect-[9/12]"
+                />
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {data?.synopsis}
@@ -46,7 +53,9 @@ export default async function AudibooksPage() {
                 <Link href={`/dashboard/audiobooks/${data?.slug}`}>
                   <Button variant="outline">Details</Button>
                 </Link>
-                <Button variant="outline">Edit</Button>
+                <Link href={`/audiobooks/${data?.slug}`}>
+                  <Button variant="outline">Overview</Button>
+                </Link>
               </td>
             </tr>
           ))}

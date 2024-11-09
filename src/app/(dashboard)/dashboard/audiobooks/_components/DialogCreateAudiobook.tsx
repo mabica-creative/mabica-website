@@ -17,6 +17,9 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
+import { createAudiobook } from "@/lib/action";
+import { Audiobook } from "@prisma/client";
+
 export function DialogCreateAudiobook() {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -42,15 +45,15 @@ export function DialogCreateAudiobook() {
       <DialogContent className="sm:max-w-[425px]">
         <form
           action={async (formData: FormData) => {
-
             const rawFormData = {
-              title: formData.get("title"),
-              slug: formData.get("slug"),
-              imageUrl: formData.get("image"),
-              synopsis: formData.get("synopsis"),
+              title: formData.get("title") as string,
+              slug,
+              imageUrl: formData.get("image") as string,
+              synopsis: formData.get("synopsis") as string,
             };
 
             console.log(rawFormData);
+            await createAudiobook(rawFormData);
           }}
         >
           <DialogHeader>
@@ -62,21 +65,22 @@ export function DialogCreateAudiobook() {
               <Label htmlFor="title">Title</Label>
               <Input
                 id="title"
+                name="title"
                 required
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-4">
               <Label htmlFor="slug">Slug</Label>
-              <Input id="slug" required value={slug} disabled />
+              <Input id="slug" name="slug" required value={slug} disabled />
             </div>
             <div className="flex flex-col gap-4">
               <Label htmlFor="image">Image</Label>
-              <Input id="image" required />
+              <Input id="image" name="image" required />
             </div>
             <div className="flex flex-col gap-4">
               <Label htmlFor="synopsis">Synopsis</Label>
-              <Textarea id="synopsis" required />
+              <Textarea id="synopsis" name="synopsis" required />
             </div>
           </div>
           <DialogFooter>
