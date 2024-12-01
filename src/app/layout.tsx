@@ -3,17 +3,19 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 export const metadata: Metadata = {
   title: {
     default: "Mabica Creative Studio",
     template: "%s - Mabica Creative Studio",
   },
-  description:
-    "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+  description: dataOverview?.aboutDescription,
   twitter: {
     card: "summary_large_image",
   },
+  icons: { icon: dataOverview?.siteLogo },
+  themeColor: dataOverview?.primaryColor,
 };
 
 interface RootLayoutProps {
