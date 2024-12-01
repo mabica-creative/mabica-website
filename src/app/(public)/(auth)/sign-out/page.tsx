@@ -7,7 +7,7 @@ export default function SignOutPage() {
       className="flex h-screen container justify-center items-center flex-col gap-2"
       action={async () => {
         "use server";
-        await signOut();
+        await signOut({ redirectTo: "/" });
       }}
     >
       <Button type="submit">Sign Out</Button>
