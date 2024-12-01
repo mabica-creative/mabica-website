@@ -11,14 +11,21 @@ export const metadata: Metadata = {
     template: "%s - Mabica Creative Studio",
   },
   description: dataOverview?.aboutDescription,
+  openGraph: {
+    images: [dataOverview?.bannerImage], // Atau URL gambar yang sesuai
+  },
   twitter: {
     card: "summary_large_image",
+    images: [dataOverview?.bannerImage], // Atau URL gambar yang sesuai
   },
   icons: { icon: dataOverview?.logo },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  ), // Menggunakan env variable di sini
 };
 
 export const viewport: Viewport = {
-  themeColor: dataOverview?.color,
+  themeColor: dataOverview?.color, // Sudah benar di sini
 };
 
 interface RootLayoutProps {
