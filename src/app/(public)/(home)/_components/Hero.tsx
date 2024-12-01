@@ -19,7 +19,7 @@ export function Hero() {
         literature. Discover adventure through the sound of words.
       </p>
       <Link href="/audiobooks">
-        <Button size="lg">Heard Story Now</Button>
+        <Button size="lg">The Story Awaits You!</Button>
       </Link>
     </main>
   );

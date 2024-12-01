@@ -7,17 +7,27 @@ export function About() {
       <div className={cn("overflow-hidden rounded-xl", "lg:rounded-3xl")}>
         <div className={cn("flex flex-col gap-4", "lg:flex-row-reverse")}>
           <div className={cn("flex-1 space-y-2", "lg:space-y-4 lg:pt-20")}>
-            <h2 className={cn("text-lg font-semibold", "lg:text-3xl")}>#About Us</h2>
+            <h2 className={cn("text-lg font-semibold", "lg:text-3xl")}>
+              #About Us
+            </h2>
             <p className={cn("opacity-80", "lg:text-2xl")}>
-              Use custom emoji, stickers, soundboard effects and more to add
-              your personality to your voice, video, or text chat. Set your
-              avatar and a custom status, and write your own profile to show up
-              in chat your way.
+              Welcome to Mabica (Mari Bikin Cerita), a community of creative
+              minds who turn idle moments into captivating stories. <br />
+              We’re here to escape the mundane—because, really, there’s more to
+              life than just asking, &quot;Rin, have you eaten?&quot; <br />{" "}
+              <br />
+              At Mabica, we believe in the magic of storytelling as a gateway to
+              the vast world of literature. <br />
+              By listening to stories, you can embark on extraordinary
+              adventures, explore uncharted emotions, and see the world through
+              the vibrant tapestry of words. <br /> <br />
+              So, lean back, hit play, and let your imagination soar. <br />
+              <strong>Just Listen—Stories Await.</strong>
             </p>
           </div>
-          <div className="lg:w-6/12">
+          <div className="lg:w-4/12">
             <Image
-              className="w-full h-full"
+              className="w-full aspect-square"
               src="/about-us.png"
               alt="Image About"
               width={500}
