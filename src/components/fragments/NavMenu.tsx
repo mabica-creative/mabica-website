@@ -35,14 +35,20 @@ const NavMenu = ({ sessionImage }: NavMenuProps) => {
             <ThemeToggle />
           </nav>
           {sessionImage ? (
-            <Link href="/dashboard">
-              <Image
-                className="rounded-full border-2 border-primary"
-                src={sessionImage}
-                alt="Picture of the author"
-                width={36}
-                height={36}
-              />
+            <Link href="/dashboard" className="flex">
+              <Button
+                variant="outline"
+                size="icon"
+                className="m-auto border-primary border-[3px] aspect-square scale-110"
+              >
+                <Image
+                  className="rounded-full w-full"
+                  src={sessionImage}
+                  alt="Picture of the author"
+                  width={60}
+                  height={60}
+                />
+              </Button>
             </Link>
           ) : (
             <Link href="/sign-in">
