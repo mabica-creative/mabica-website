@@ -5,7 +5,7 @@ export function Banner() {
     <section id="banner" className="container py-5">
       <div className="overflow-hidden rounded-xl w-full">
         <Image
-          className="w-full lg:aspect-[12/4] object-fit"
+          className="w-full object-cover aspect-[12/6]"
           src="/banner.png"
           alt="audiobook banner"
           width="1200"
