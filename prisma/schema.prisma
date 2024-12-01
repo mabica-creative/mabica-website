@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Audiobook {
+  id         Int       @id @default(autoincrement())
+  imageUrl   String
+  title      String
+  slug       String    @unique
+  synopsis   String
+  deleted    Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  detail     DetailAudiobook? // One-to-one ke DetailAudiobook 
+  chapters   Chapter[]        // One-to-many ke Chapter
+}
+
+model DetailAudiobook {
+  id          Int       @id @default(autoincrement())
+  author      String
+  editor      String
+  genre       String
+  voiceActor  String
+  status      String
+
+  audiobookId Int       @unique // Kunci asing ke Audiobook
+  audiobook   Audiobook @relation(fields: [audiobookId], references: [id]) // Relasi dengan Audiobook
+}
+
+model Chapter {
+  id            Int       @id @default(autoincrement())
+  chapterNumber Int
+  deleted       Boolean    @default(false)
+  slug          String     @unique
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  detail        DetailChapter? // One-to-one ke DetailChapter 
+  audiobookId   Int       // Kunci asing ke Audiobook
+  audiobook     Audiobook @relation(fields: [audiobookId], references: [id]) // Relasi dengan Audiobook
+}
+
+model DetailChapter {
+  id        Int     @id @default(autoincrement())
+  content   String
+  audioUrl  String
+
+  chapterId Int     @unique // Kunci asing ke Chapter
+  chapter   Chapter @relation(fields: [chapterId], references: [id]) // Relasi dengan Chapter
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@map("sessions")
+}
+ 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+ 
+  @@map("users")
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
