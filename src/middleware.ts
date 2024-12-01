@@ -15,8 +15,8 @@ export async function middleware(req: NextRequest) {
   if (
     (!session ||
       !session.user ||
+      session.user.email !== "mabica.cr@gmail.com" ||
       session.user.email !== "osiic.offcl@gmail.com") &&
-      session.user.email !== "mabica.cr@gmail.com") &&
     req.nextUrl.pathname.startsWith("/dashboard")
   ) {
     const newUrl = new URL("/sign-out", req.nextUrl.origin); // Ganti dengan halaman akses ditolak
