@@ -4,8 +4,9 @@ interface ChapterAudioProps {
 
 const ChapterAudio = ({ audio }: ChapterAudioProps) => {
   return (
-    <section className="container overflow-hidden rounded-xl">
+    <section className="container ">
       <iframe
+        className="w-full overflow-clip rounded-2xl"
         width="100%"
         height="100"
         allow="autoplay"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 export function Donation() {
   return (
@@ -13,11 +14,17 @@ export function Donation() {
             "lg:text-3xl",
           )}
         >
-          Support Our Stories! <br /> Your donation helps us create and inspire.
-          Donate now!
+          {dataOverview?.donationHeading &&
+            dataOverview?.donationHeading
+              .split("\n")
+              .map((item: string, index: number) => (
+                <>
+                  <p key={index}>{item}</p>
+                </>
+              ))}
         </h2>
-        <Link href="/audiobook">
-          <Button size="lg">Donate Now</Button>
+        <Link href={dataOverview?.donationButtonLink}>
+          <Button size="lg">{dataOverview?.donationButton}</Button>
         </Link>
       </div>
       <hr />

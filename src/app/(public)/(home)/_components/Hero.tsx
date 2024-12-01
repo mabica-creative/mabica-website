@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 export function Hero() {
   return (
@@ -12,14 +13,13 @@ export function Hero() {
       )}
     >
       <h1 className={cn("font-semibold text-lg", "lg:text-4xl")}>
-        Lazy to read? Just Listen, Stories Await.
+        {dataOverview?.header}
       </h1>
       <p className={cn("mb-4 mt-2 opacity-80", "lg:text-xl lg:w-8/12")}>
-        Listening to stories as a practical way to enjoy the world of
-        literature. Discover adventure through the sound of words.
+        {dataOverview?.headerDescription}
       </p>
-      <Link href="/audiobooks">
-        <Button size="lg">The Story Awaits You!</Button>
+      <Link href={dataOverview?.headerButtonLink}>
+        <Button size="lg">{dataOverview?.headerButton}</Button>
       </Link>
     </main>
   );

@@ -1,19 +1,31 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 export const metadata: Metadata = {
   title: {
     default: "Mabica Creative Studio",
     template: "%s - Mabica Creative Studio",
   },
-  description:
-    "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+  description: dataOverview?.aboutDescription,
+  openGraph: {
+    images: [dataOverview?.bannerImage], // Atau URL gambar yang sesuai
+  },
   twitter: {
     card: "summary_large_image",
+    images: [dataOverview?.bannerImage], // Atau URL gambar yang sesuai
   },
+  icons: { icon: dataOverview?.logo },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  ), // Menggunakan env variable di sini
+};
+
+export const viewport: Viewport = {
+  themeColor: dataOverview?.color, // Sudah benar di sini
 };
 
 interface RootLayoutProps {
