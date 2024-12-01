@@ -5,8 +5,9 @@ interface links {
 
 const dataNavbar: links[] = [
   { title: "Home", href: "#" },
-  { title: "About", href: "#about" },
-  { title: "Audiobooks", href: "#audiobook" },
+  { title: "About Us", href: "#about" },
+  { title: "Previews", href: "#audiobook" },
+  { title: "Audiobooks", href: "/audiobooks" },
   { title: "Donation", href: "#donation" },
 ];
 
