@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { signOut } from "next-auth/react";
 import { X, AlignRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { dataNavbar } from "@/lib/data/dataNavbar";
@@ -43,8 +42,8 @@ const NavMenu = ({ sessionImage }: NavMenuProps) => {
               />
             </Link>
           ) : (
-            <Link href="/audiobooks">
-              <Button className="w-full self-end">Heard Story Now</Button>
+            <Link href="/sign-in">
+              <Button variant="outline" className="w-full self-end">Sign In</Button>
             </Link>
           )}
         </div>
