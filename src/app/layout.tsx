@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +24,10 @@ const font = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
