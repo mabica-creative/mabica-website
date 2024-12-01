@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 export function About() {
   return (
@@ -10,25 +11,22 @@ export function About() {
             <h2 className={cn("text-lg font-semibold", "lg:text-3xl")}>
               #About Us
             </h2>
-            <p className={cn("opacity-80", "lg:text-2xl")}>
-              Welcome to Mabica (Mari Bikin Cerita), a community of creative
-              minds who turn idle moments into captivating stories. <br />
-              We’re here to escape the mundane—because, really, there’s more to
-              life than just asking, &quot;Rin, have you eaten?&quot; <br />{" "}
-              <br />
-              At Mabica, we believe in the magic of storytelling as a gateway to
-              the vast world of literature. <br />
-              By listening to stories, you can embark on extraordinary
-              adventures, explore uncharted emotions, and see the world through
-              the vibrant tapestry of words. <br /> <br />
-              So, lean back, hit play, and let your imagination soar. <br />
-              <strong>Just Listen—Stories Await.</strong>
-            </p>
+            <div className={cn("opacity-80", "lg:text-2xl")}>
+              {dataOverview?.aboutDescription &&
+                dataOverview?.aboutDescription
+                  .split("\n")
+                  .map((item: string, index: number) => (
+                    <>
+                      <p key={index}>{item}</p>
+                      <br />
+                    </>
+                  ))}
+            </div>
           </div>
           <div className="lg:w-4/12">
             <Image
               className="w-full aspect-square"
-              src="/about-us.png"
+              src={dataOverview?.aboutImage}
               alt="Image About"
               width={500}
               height={500}

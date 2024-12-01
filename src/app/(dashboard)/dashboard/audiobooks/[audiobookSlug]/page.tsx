@@ -27,13 +27,16 @@ export default async function DetailAudiobookPage({
   }
 
   return (
-    <section className="container min-h-screen">
-      <div className="flex justify-between items-center pb-4">
-        <h1>Detail for {data?.title}</h1>
+    <section className="container min-h-screen py-12">
+      <div className="mb-8 flex justify-between items-center">
+        <h1 className="text-3xl font-semibold">{`Detail for ${data?.title}`}</h1>
+
         {/* Buttons */}
-        <div className="flex space-x-2 mt-4">
+        <div className="flex space-x-2">
           <Link href={`/audiobooks/${data.slug}`}>
-            <Button variant="outline">Overview</Button>
+            <Button variant="outline" className="py-2 px-4">
+              Overview
+            </Button>
           </Link>
           <DialogUpdateAudiobook data={data} />
           <form
@@ -43,38 +46,37 @@ export default async function DetailAudiobookPage({
               return redirect("/dashboard/audiobooks");
             }}
           >
-            <Button variant="outline" type="submit">
+            <Button variant="outline" type="submit" className="py-2 px-4">
               Delete
             </Button>
           </form>
         </div>
       </div>
-      <div className=" mx-auto p-4">
-        {/* Audiobook Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-4">{data?.title}</h1>
-          <div className="flex mt-4 gap-4 ">
-            <Image
-              src={data?.imageUrl}
-              alt={data?.title}
-              width={300}
-              height={300}
-              className="bg-green-500 aspect-[9/12]"
-            />
-            <p className="text-gray-600">{data?.synopsis}</p>
-          </div>
-        </div>
 
-        {/* Audiobook Info */}
-        <div className="mb-8">
-          <div className="flex justify-between">
-            <h2 className="text-2xl font-semibold mb-4">Audiobook Details</h2>
-            <DialogUpdateDetailAudiobook
-              audiobookSlug={data?.slug}
-              audiobookId={data?.id}
-              data={data?.detail}
-            />
-          </div>
+      {/* Audiobook Header */}
+      <div className="flex flex-col items-center text-center mb-8">
+        <Image
+          src={data?.imageUrl}
+          alt={data?.title}
+          width={300}
+          height={300}
+          className="rounded-lg object-cover mb-4"
+        />
+        <h2 className="text-3xl font-bold">{data?.title}</h2>
+        <p className="text-lg text-muted-foreground mt-2">{data?.synopsis}</p>
+      </div>
+
+      {/* Audiobook Info */}
+      <div className="mb-8 space-y-4">
+        <div className="flex justify-between">
+          <h2 className="text-2xl font-semibold">Audiobook Details</h2>
+          <DialogUpdateDetailAudiobook
+            audiobookSlug={data?.slug}
+            audiobookId={data?.id}
+            data={data?.detail}
+          />
+        </div>
+        <div className="space-y-2">
           <p>
             <strong>Author:</strong> {data?.detail?.author}
           </p>
@@ -99,53 +101,55 @@ export default async function DetailAudiobookPage({
             {new Date(data?.updatedAt).toLocaleString()}
           </p>
         </div>
+      </div>
 
-        {/* Chapters List */}
-        <div>
-          <div className="flex justify-between items-center pb-4">
-            <h2 className="text-2xl font-semibold mb-4">Chapters</h2>
-            <DialogCreateChapter
-              audiobookSlug={data?.slug}
-              audiobookId={data?.id}
-            />
-          </div>
-
-          <ul className="space-y-4">
-            {data?.chapters?.map((chapter) => (
-              <li
-                key={chapter?.id}
-                className="p-4 border rounded-lg shadow-sm hover:shadow-md transition"
-              >
-                <p className="font-semibold">
-                  Chapter {chapter?.chapterNumber}
-                </p>
-                <p>
-                  <strong>Slug:</strong> {chapter?.slug}
-                </p>
-                <p>
-                  <strong>Created At:</strong>{" "}
-                  {new Date(chapter?.createdAt).toLocaleString()}
-                </p>
-                <p>
-                  <strong>Updated At:</strong>{" "}
-                  {new Date(chapter?.updatedAt).toLocaleString()}
-                </p>
-
-                {/* Buttons */}
-                <div className="flex space-x-2 mt-4">
-                  <Link
-                    href={`/dashboard/audiobooks/${data?.slug}/${chapter?.slug}`}
-                  >
-                    <Button variant="outline">Detail</Button>
-                  </Link>
-                  <Link href={`/audiobooks/${data?.slug}/${chapter?.slug}`}>
-                    <Button variant="outline">Overview</Button>
-                  </Link>
-                </div>
-              </li>
-            ))}
-          </ul>
+      {/* Chapters List */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Chapters</h2>
+          <DialogCreateChapter
+            audiobookSlug={data?.slug}
+            audiobookId={data?.id}
+          />
         </div>
+
+        <ul className="space-y-4">
+          {data?.chapters?.map((chapter) => (
+            <li
+              key={chapter?.id}
+              className="p-4 border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition"
+            >
+              <p className="font-semibold">Chapter {chapter?.chapterNumber}</p>
+              <p>
+                <strong>Slug:</strong> {chapter?.slug}
+              </p>
+              <p>
+                <strong>Created At:</strong>{" "}
+                {new Date(chapter?.createdAt).toLocaleString()}
+              </p>
+              <p>
+                <strong>Updated At:</strong>{" "}
+                {new Date(chapter?.updatedAt).toLocaleString()}
+              </p>
+
+              {/* Buttons */}
+              <div className="flex space-x-2 mt-4">
+                <Link
+                  href={`/dashboard/audiobooks/${data?.slug}/${chapter?.slug}`}
+                >
+                  <Button variant="outline" className="py-2 px-4">
+                    Detail
+                  </Button>
+                </Link>
+                <Link href={`/audiobooks/${data?.slug}/${chapter?.slug}`}>
+                  <Button variant="outline" className="py-2 px-4">
+                    Overview
+                  </Button>
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

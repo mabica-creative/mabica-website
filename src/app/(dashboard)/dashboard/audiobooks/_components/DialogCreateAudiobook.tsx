@@ -18,7 +18,6 @@ import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
 import { createAudiobook } from "@/lib/action";
-import { Audiobook } from "@prisma/client";
 
 export function DialogCreateAudiobook() {
   const [title, setTitle] = useState("");
@@ -42,7 +41,7 @@ export function DialogCreateAudiobook() {
       <DialogTrigger asChild>
         <Button>Create Audiobook</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-2xl">
         <form
           action={async (formData: FormData) => {
             const rawFormData = {

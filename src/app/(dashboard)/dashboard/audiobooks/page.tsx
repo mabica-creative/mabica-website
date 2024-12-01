@@ -1,55 +1,47 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-
 import { getAllAudiobooks } from "@/lib/action";
 import { Audiobook } from "@prisma/client";
 import { DialogCreateAudiobook } from "./_components/DialogCreateAudiobook";
 
-export default async function AudibooksPage() {
+export default async function AudiobooksPage() {
   const audiobooks: Audiobook[] = await getAllAudiobooks();
 
   return (
-    <section className="container min-h-screen">
+    <section className="container min-h-screen py-6">
       <div className="flex justify-between items-center pb-4">
-        <h1>Audiobooks</h1>
-
+        <h1 className="text-2xl font-semibold">Audiobooks</h1>
         <DialogCreateAudiobook />
       </div>
-      <table className="min-w-full border-collapse border border-gray-200">
+
+      {/* Tabel */}
+      <table className="min-w-full">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Title</th>
-            <th className="border border-gray-300 px-4 py-2">Image</th>
-            <th className="border border-gray-300 px-4 py-2">Synopsis</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">
-              Action
-            </th>
+          <tr className="text-left">
+            <th className="px-4 py-2">ID</th>
+            <th className="px-4 py-2">Title</th>
+            <th className="px-4 py-2">Image</th>
+            <th className="px-4 py-2">Synopsis</th>
+            <th className="px-4 py-2 text-right">Action</th>
           </tr>
         </thead>
         <tbody>
           {audiobooks.map((data: Audiobook) => (
-            <tr key={data?.id} className="bg-white even:bg-gray-50">
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                {data?.id}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {data?.title}
-              </td>
-              <td className="border border-gray-300  px-4 py-2">
+            <tr key={data?.id} className="even:bg-gray-50">
+              <td className="px-4 py-2 text-center">{data?.id}</td>
+              <td className="px-4 py-2">{data?.title}</td>
+              <td className="px-4 py-2 text-center">
                 <Image
                   src={data?.imageUrl}
                   alt={data?.title}
                   width={100}
                   height={100}
-                  className="bg-green-500 m-auto aspect-[9/12]"
+                  className="m-auto aspect-[9/12]"
                 />
               </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {data?.synopsis}
-              </td>
-              <td className="border border-gray-300 px-4 py-2 text-right space-x-2">
+              <td className="px-4 py-2">{data?.synopsis}</td>
+              <td className="px-4 py-2 text-right space-x-2">
                 <Link href={`/dashboard/audiobooks/${data?.slug}`}>
                   <Button variant="outline">Details</Button>
                 </Link>

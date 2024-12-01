@@ -1,15 +1,15 @@
 {
-  "mainHeader": "Lazy to read? Just Listen, Stories Await.",
-  "subHeader": "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+  "header": "Lazy to read? Just Listen, Stories Await.",
+  "headerDescription": "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
   "headerButton": "The Story Awaits You!",
   "headerButtonLink": "/audiobooks",
   "bannerImage": "/banner.png",
   "bannerLink": "https://mabica.vercel.app/audiobooks/occult-of-catalyst-shrouded-soul-teaser",
   "aboutImage": "/about-us.png",
-  "aboutDescription": "Welcome to Mabica (Mari Bikin Cerita), a community of creative minds who turn idle moments into captivating stories. We’re here to escape the mundane—because, really, there’s more to life than just asking, \"Rin, have you eaten?\"\n\nAt Mabica, we believe in the magic of storytelling as a gateway to the vast world of literature. By listening to stories, you can embark on extraordinary adventures, explore uncharted emotions, and see the world through the vibrant tapestry of words.\n\nSo, lean back, hit play, and let your imagination soar. Just Listen—Stories Await.",
+  "aboutDescription": "Welcome to Mabica (Mari Bikin Cerita), a community of creative minds who turn idle moments into captivating stories. We’re here to escape the mundane—because, really, there’s more to life than just asking, \"Rin, have you eaten?\"\n\nAt Mabica, we believe in the magic of storytelling as a gateway to the vast world of literature. By listening to stories, you can embark on extraordinary adventures, explore uncharted emotions, and see the world through the vibrant tapestry of words.\n\nSo, lean back, hit play, and let your imagination soar.",
   "donationHeading": "Support Our Stories!\nYour donation helps us create and inspire. Donate now!",
-  "buttonHeading": "Donate now",
-  "buttonHeadingLink": "/donate",
-  "primaryColor": "#0BCB52",
-  "siteLogo": "/logo.svg"
+  "donationButton": "Donate now",
+  "donationButtonLink": "/donate",
+  "color": "#0BCB52",
+  "logo": "/logo.svg"
 }

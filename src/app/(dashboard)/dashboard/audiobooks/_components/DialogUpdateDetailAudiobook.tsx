@@ -31,7 +31,7 @@ export function DialogUpdateDetailAudiobook({
       <DialogTrigger asChild>
         <Button variant="outline">Update Detail</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-2xl">
         <form
           action={async (formData: FormData) => {
             const rawFormData = {

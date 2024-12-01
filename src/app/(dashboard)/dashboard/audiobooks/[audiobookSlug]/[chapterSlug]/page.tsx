@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { DialogUpdateChapter } from "./../../_components/DialogUpdateChapter";
 import { DialogUpdateDetailChapter } from "./../../_components/DialogUpdateDetailChapter";
+import { getOneChapter, deleteChapter } from "@/lib/action";
 
 import { Chapter, DetailChapter } from "@prisma/client";
-import { getOneChapter, deleteChapter } from "@/lib/action";
 
 interface DataInterfaceChapter extends Chapter {
   detail: DetailChapter;
@@ -23,36 +23,39 @@ export default async function DetailChapterPage({
   const audiobookSlug = data?.slug.split("-").slice(0, -1).join("-");
 
   return (
-    <section className="container min-h-screen">
-      <div className="flex justify-between items-center pb-4">
-        <h1>Detail for Chapter {data?.chapterNumber}</h1>
-        {/* Buttons */}
-        <div className="flex space-x-2 mt-4">
-          <Link href={`/audiobooks/${audiobookSlug}/${data?.slug}`}>
-            <Button variant="outline">Overview</Button>
-          </Link>
-          <DialogUpdateChapter
-            audiobookSlug={audiobookSlug}
-            chapterId={data?.id}
-            audiobookId={data?.audiobookId}
-            data={data}
-          />
-          <form
-            action={async () => {
-              "use server";
-              await deleteChapter(data?.slug);
-              return redirect(`/dashboard/audiobooks`);
-            }}
-          >
-            <Button variant="outline" type="submit">
-              Delete
-            </Button>
-          </form>
+    <main className="pt-16 space-y-4 lg:py-10 lg:pt-28">
+      <div className="container">
+        {/* Header */}
+        <div className="flex justify-between items-center pb-4">
+          <h1 className="text-3xl font-bold mb-4">
+            Chapter {data?.chapterNumber} Details
+          </h1>
+          <div className="flex space-x-2 mt-4">
+            <Link href={`/audiobooks/${audiobookSlug}/${data?.slug}`}>
+              <Button variant="outline">Overview</Button>
+            </Link>
+            <DialogUpdateChapter
+              audiobookSlug={audiobookSlug}
+              chapterId={data?.id}
+              audiobookId={data?.audiobookId}
+              data={data}
+            />
+            <form
+              action={async () => {
+                "use server";
+                await deleteChapter(data?.slug);
+                return redirect(`/dashboard/audiobooks`);
+              }}
+            >
+              <Button variant="outline" type="submit">
+                Delete
+              </Button>
+            </form>
+          </div>
         </div>
-      </div>
-      <div className="max-w-4xl mx-auto p-4">
+
         {/* Chapter Header */}
-        <div className="text-center mb-8">
+        <div className="max-w-4xl mx-auto p-4 text-center mb-8">
           <h1 className="text-3xl font-bold mb-4">
             Chapter {data?.chapterNumber}
           </h1>
@@ -80,7 +83,7 @@ export default async function DetailChapterPage({
               chapterSlug={data?.slug}
             />
           </div>
-          <div className="w-full rounded-2xl">
+          <div className="w-full overflow-clip rounded-2xl">
             <iframe
               width="100%"
               height="100"
@@ -96,6 +99,6 @@ export default async function DetailChapterPage({
           <p>{data?.detail?.content}</p>
         </div>
       </div>
-    </section>
+    </main>
   );
 }
