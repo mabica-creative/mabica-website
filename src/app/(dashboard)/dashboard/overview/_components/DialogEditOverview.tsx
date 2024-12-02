@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
+import { updateOverview } from "@/lib/action";
 import dataOverview from "@/lib/data/dataOverview.json";
 
 export function DialogEditOverview() {
@@ -27,6 +28,7 @@ export function DialogEditOverview() {
           action={async (formData: FormData) => {
             const rawFormData = Object.fromEntries(formData.entries());
             console.log(rawFormData);
+            updateOverview(rawFormData);
           }}
         >
           <DialogHeader>
@@ -179,7 +181,7 @@ export function DialogEditOverview() {
             </div>
           </div>
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <Button type="submit">Save Changes</Button>
