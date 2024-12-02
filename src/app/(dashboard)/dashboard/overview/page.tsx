@@ -1,6 +1,6 @@
 import Image from "next/image";
-import dataOverview from "@/lib/data/dataOverview.json";
 import { DialogEditOverview } from "./_components/DialogEditOverview";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 export default async function OverviewPage() {
   return (
@@ -38,11 +38,7 @@ export default async function OverviewPage() {
                     </div>
                   ) : key === "color" ? (
                     <div className="flex items-center space-x-4">
-                      <div
-                        className="inline-block h-5 w-5 rounded-full"
-                        style={{ backgroundColor: value }}
-                      ></div>
-                      <span>{value}</span>
+                      <div className="inline-block h-5 w-5 rounded-full"></div>
                     </div>
                   ) : typeof value === "string" ? (
                     value

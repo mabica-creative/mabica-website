@@ -36,7 +36,7 @@ const font = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body className={font.className}>
         <ThemeProvider
           attribute="class"

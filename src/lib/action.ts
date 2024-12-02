@@ -117,6 +117,7 @@ export async function updateChapter(slug: string, data: any) {
   console.log(result);
   redirect("/dashboard/audiobooks/");
 }
+
 export async function updateDetailChapter(slug: string, data: any) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/chapters/${slug}`,
@@ -131,4 +132,25 @@ export async function updateDetailChapter(slug: string, data: any) {
   const result = await res.json();
   console.log(result);
   redirect("/dashboard/audiobooks/");
+}
+
+export async function getOverview(cache = {}) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/overview`,
+    cache,
+  );
+  return await res.json();
+}
+
+export async function updateOverview(data: any) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/overview`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data), // Mengirim data dalam bentuk JSON
+  });
+  const result = await res.json();
+  console.log(result);
+  redirect("/dashboard/");
 }

@@ -61,6 +61,25 @@ model DetailChapter {
   chapter   Chapter @relation(fields: [chapterId], references: [id]) // Relasi dengan Chapter
 }
 
+model DataOverview {
+  id                 Int      @id @default(autoincrement())
+  header             String?  // Optional: Judul utama
+  headerDescription  String?  // Optional: Deskripsi header
+  headerButton       String?  // Optional: Teks tombol header
+  headerButtonLink   String?  // Optional: Link tombol header
+  bannerImage        String?  // Optional: Path ke gambar banner
+  bannerLink         String?  // Optional: Link banner
+  aboutImage         String?  // Optional: Path ke gambar tentang
+  aboutDescription   String?  // Optional: Deskripsi bagian 'About'
+  donationHeading    String?  // Optional: Judul bagian donasi
+  donationButton     String?  // Optional: Teks tombol donasi
+  donationButtonLink String?  // Optional: Link tombol donasi
+  color              String?  // Optional: Warna utama
+  logo               String?  // Optional: Path ke logo
+  createdAt          DateTime @default(now()) // Timestamp untuk pencatatan waktu pembuatan
+  updatedAt          DateTime @updatedAt      // Timestamp untuk pencatatan waktu pembaruan
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String  @map("user_id")
