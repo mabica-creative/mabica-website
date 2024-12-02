@@ -15,16 +15,12 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 import { updateOverview } from "@/lib/action";
-import { DataOverview as Overview } from "@prisma/client";
 
-export function DialogEditOverview({
-  dataOverview,
-}: {
-  dataOverview: Overview;
-}) {
+export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
   if (!dataOverview) {
     return <p>Data overview tidak tersedia.</p>;
   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
