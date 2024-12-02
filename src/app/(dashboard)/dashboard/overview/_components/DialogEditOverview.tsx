@@ -15,9 +15,12 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 import { updateOverview } from "@/lib/action";
-import dataOverview from "@/lib/data/dataOverview.json";
 
-export function DialogEditOverview() {
+export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
+  if (!dataOverview) {
+    return <p>Data overview tidak tersedia.</p>;
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>

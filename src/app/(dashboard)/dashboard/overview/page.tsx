@@ -1,13 +1,15 @@
 import Image from "next/image";
+import { getOverview } from "@/lib/action";
 import { DialogEditOverview } from "./_components/DialogEditOverview";
-import dataOverview from "@/lib/data/dataOverview.json";
 
 export default async function OverviewPage() {
+  const dataOverview = await getOverview({ cache: "no-cache" });
+
   return (
     <section className="container min-h-screen py-6">
       <div className="flex justify-between items-center pb-4">
         <h1 className="text-2xl font-semibold">Overview</h1>
-        <DialogEditOverview />
+        <DialogEditOverview dataOverview={dataOverview} />
       </div>
 
       <div className="overflow-x-auto">
@@ -20,7 +22,7 @@ export default async function OverviewPage() {
           </thead>
           <tbody>
             {Object.entries(dataOverview).map(([key, value]) => (
-              <tr key={key}>
+              <tr key={key + value}>
                 <td className="px-4 py-2 font-medium">{key}</td>
                 <td className="px-4 py-2">
                   {(key.toLowerCase().includes("image") ||
