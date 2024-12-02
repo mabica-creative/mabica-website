@@ -30,8 +30,8 @@ export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
         <form
           action={async (formData: FormData) => {
             const rawFormData = Object.fromEntries(formData.entries());
-            console.log(rawFormData);
-            updateOverview(rawFormData);
+            console.log({rawFormData});
+            await updateOverview(rawFormData);
           }}
         >
           <DialogHeader>
@@ -187,7 +187,7 @@ export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit">Edit Overview</Button>
           </DialogFooter>
         </form>
       </DialogContent>
