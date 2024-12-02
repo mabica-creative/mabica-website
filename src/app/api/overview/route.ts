@@ -1,32 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import { DataOverview } from "@prisma/client";
-
-/**
- * Fungsi untuk memperbarui isi file dataOverview.json
- * @param newData - Data baru yang akan ditambahkan atau diperbarui
- */
-const updateDataOverviewFile = (newData: Partial<DataOverview>): void => {
-  const filePath = path.join(process.cwd(), "src/lib/data/dataOverview.json");
-
-  try {
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`File dataOverview.json tidak ditemukan di ${filePath}`);
-    }
-
-    const fileData = fs.readFileSync(filePath, "utf-8");
-    const jsonData: DataOverview = JSON.parse(fileData);
-
-    const updatedData = { ...jsonData, ...newData };
-
-    fs.writeFileSync(filePath, JSON.stringify(updatedData, null, 2), "utf-8");
-    console.log("File dataOverview.json berhasil diperbarui!");
-  } catch (error) {
-    console.error("Gagal memperbarui file dataOverview.json:", error);
-  }
-};
 
 // GET: Ambil DataOverview dengan id=1
 export async function GET() {
@@ -76,9 +49,6 @@ export async function PUT(request: Request) {
         createdAt: new Date(),
       },
     });
-
-    // Setelah berhasil, sinkronkan ke file JSON lokal
-    updateDataOverviewFile(body);
 
     return NextResponse.json({ data });
   } catch (error) {

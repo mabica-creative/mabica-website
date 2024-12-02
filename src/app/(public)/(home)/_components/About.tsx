@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import dataOverview from "@/lib/data/dataOverview.json";
+import { getOverview } from "@/lib/action";
 
-export function About() {
+export async function About() {
+  const dataOverview = await getOverview();
+
   return (
     <section id="about" className="scroll-mt-14 container py-5">
       <div className={cn("overflow-hidden rounded-xl", "lg:rounded-3xl")}>

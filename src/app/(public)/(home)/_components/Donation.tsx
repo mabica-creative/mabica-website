@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import dataOverview from "@/lib/data/dataOverview.json";
+import { getOverview } from "@/lib/action";
 
-export function Donation() {
+export async function Donation() {
+    const dataOverview = await getOverview();
+
   return (
     <section id="donation" className="container py-5 scroll-mt-14">
       <hr />

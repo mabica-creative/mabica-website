@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import dataOverview from "@/lib/data/dataOverview.json";
+import { getOverview } from "@/lib/action";
 
-export function Hero() {
+export async function Hero() {
+  const dataOverview = await getOverview();
+
   return (
     <main
       id="home"
