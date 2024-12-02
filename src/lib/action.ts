@@ -151,5 +151,6 @@ export async function updateOverview(data: any) {
     body: JSON.stringify(data), // Mengirim data dalam bentuk JSON
   });
   const result = await res.json();
+  console.log(result);
   redirect("/dashboard/");
 }
