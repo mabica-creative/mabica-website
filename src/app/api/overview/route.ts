@@ -50,7 +50,8 @@ export async function PUT(request: Request) {
       },
     });
 
-    return NextResponse.json({ data });
+    console.log(data)
+    return NextResponse.json({ ...data });
   } catch (error) {
     console.error("Error upserting DataOverview:", error);
     return NextResponse.json(
