@@ -25,8 +25,8 @@ export async function GET() {
   }
 }
 
-// PUT: Upsert DataOverview dengan id=1
-export async function PUT(request: Request) {
+// Upsert DataOverview dengan id=1
+export async function PATCH(request: Request) {
   try {
     const body = await request.json();
 

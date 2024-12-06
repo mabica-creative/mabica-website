@@ -144,7 +144,7 @@ export async function getOverview(cache = {}) {
 
 export async function updateOverview(data: any) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/overview`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
