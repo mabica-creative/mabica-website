@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { getOverview } from "@/lib/action";
 
 export async function Donation() {
-    const dataOverview = await getOverview();
+  const dataOverview = await getOverview();
 
   return (
     <section id="donation" className="container py-5 scroll-mt-14">
