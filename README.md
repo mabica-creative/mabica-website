@@ -1,13 +1,2 @@
-# Mabica Website v1
-
+# Mabica Website
 Just a website for mabica.
-
-## Requared
-- The website is exis
-- Mabica Have landing page
-- Client can access audiobooks
-
-# Have todo
-- nightmode
-- performance
-- accesibiliti
