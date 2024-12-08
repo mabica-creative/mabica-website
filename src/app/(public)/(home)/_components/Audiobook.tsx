@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import { getAllAudiobooks } from "@/lib/action";
 import { CardContainer } from "@/components/layout/CardContainer";
 
-import { Audiobook } from "@prisma/client";
+import { Audiobook as AudiobookType } from "@prisma/client";
 import type { Card as CardType } from "@/lib/interface/Card";
 
 export async function Audiobook() {
   const data = await getAllAudiobooks();
   const cards: CardType[] = data.map(
-    ({ slug, imageUrl, title, synopsis }: Audiobook) => {
+    ({ slug, imageUrl, title, synopsis }: AudiobookType) => {
       return {
         href: `/audiobooks/${slug}`,
         image: imageUrl,
