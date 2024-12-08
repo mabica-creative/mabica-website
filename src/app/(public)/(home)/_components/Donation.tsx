@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { getOverview } from "@/lib/action";
 
-export async function Donation() {
-  const dataOverview = await getOverview();
+export async function Donation({dataOverview}: any) {
 
   return (
     <section id="donation" className="container py-5 scroll-mt-14">

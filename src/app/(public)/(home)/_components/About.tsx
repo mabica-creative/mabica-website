@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { getOverview } from "@/lib/action";
 
-export async function About() {
-  const dataOverview = await getOverview();
+export async function About({dataOverview}: any) {
 
   return (
     <section id="about" className="scroll-mt-14 container py-5">

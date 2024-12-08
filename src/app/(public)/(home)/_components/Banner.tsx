@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getOverview } from "@/lib/action";
 
-export async function Banner() {
-  const dataOverview = await getOverview();
+export async function Banner({dataOverview}: any) {
 
   return (
     <section id="banner" className="container py-5">
