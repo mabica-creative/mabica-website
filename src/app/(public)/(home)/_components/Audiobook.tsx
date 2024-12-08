@@ -1,52 +1,29 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import { useAudiobooks } from "@/hooks/useAudiobooks";
-
+import { getAllAudiobooks } from "@/lib/action";
 import { CardContainer } from "@/components/layout/CardContainer";
 
-import type { Audiobook as AudiobookType } from "@/lib/interface/Audiobook";
+import { Audiobook } from "@prisma/client";
 import type { Card as CardType } from "@/lib/interface/Card";
-export function Audiobook() {
-  const { data, loading, error } = useAudiobooks();
+
+export async function Audiobook() {
+  const data = await getAllAudiobooks();
   const cards: CardType[] = data.map(
-    ({ slug, image, title, synopsis }: AudiobookType) => {
+    ({ slug, imageUrl, title, synopsis }: Audiobook) => {
       return {
         href: `/audiobooks/${slug}`,
-        image,
+        image: imageUrl,
         heading: title,
         subHeading: synopsis,
       };
     },
   );
+
   return (
-    <>
-      {loading ? (
-        <h1 className="container h-96 flex justify-center items-center">
-          Loading...
-        </h1>
-      ) : error ? (
-        <h1 className="container h-96 flex justify-center items-center">
-          Error: {error.message}
-        </h1>
-      ) : !!data.length ? (
-        <section
-          id="audiobook"
-          className={cn(
-            "container py-5 lg:py-10 space-y-2 scroll-mt-14",
-            "lg:space-y-4",
-          )}
-        >
-          <h2 className={cn("text-lg font-semibold", "lg:text-3xl")}>
-            #Audiobooks
-          </h2>
-          <CardContainer cards={cards} />
-        </section>
-      ) : (
-        <h1 className="container h-96 flex justify-center items-center">
-          No Audiobooks Found
-        </h1>
-      )}
-    </>
+    <section className="container flex flex-col gap-4 py-10" id="audiobooks">
+      <h2 className={cn("text-lg font-semibold", "lg:text-3xl")}>
+        #Audiobooks
+      </h2>
+      <CardContainer cards={cards} />
+    </section>
   );
 }
