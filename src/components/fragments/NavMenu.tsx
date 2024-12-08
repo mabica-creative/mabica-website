@@ -19,7 +19,7 @@ const NavMenu = ({ sessionImage }: NavMenuProps) => {
   return (
     <div>
       <div
-        className={`${isNavMenuOpen ? "absolute w-screen h-screen " : "hidden"} lg:block -z-40 top-0 left-0 right-0 bg-background lg:bg-transparent	`}
+        className={`${isNavMenuOpen ? "absolute w-screen h-[100dvh] " : "hidden"} lg:block -z-40 top-0 left-0 right-0 bg-background lg:bg-transparent	`}
       >
         <div className="container flex flex-col lg:flex-row justify-between gap-4 lg:items-center h-full lg:py-4 pt-28 pb-10 ">
           <nav className="flex items-center flex-col lg:flex-row justify-center gap-4">
