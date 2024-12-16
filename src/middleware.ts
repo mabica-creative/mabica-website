@@ -2,7 +2,18 @@ import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const allowedOrigins = process.env.NEXT_PUBLIC_BASE_URL?.split(",") || [
+  "http://localhost:3000",
+];
+
 export async function middleware(req: NextRequest) {
+  const origin = req.headers.get("origin");
+
+  // Periksa apakah origin ada dalam daftar yang diizinkan
+  if (origin && !allowedOrigins.includes(origin)) {
+    return new NextResponse("CORS Error: Origin not allowed", { status: 403 });
+  }
+
   const session = await auth();
 
   // Ambil email yang diizinkan dari variabel lingkungan
