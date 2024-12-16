@@ -3,15 +3,15 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import dataOverview from "@/lib/data/dataOverview.json";
 
 import { getOverview } from "@/lib/action";
 export async function generateMetadata(): Promise<Metadata> {
-  const dataOverview = await getOverview();
 
   return {
     title: {
-      default: "Mabica Creative Studio",
-      template: "%s - Mabica Creative Studio",
+      default: "Mabica Creative",
+      template: "%s - Mabica Creative",
     },
     description: dataOverview?.aboutDescription,
     openGraph: {

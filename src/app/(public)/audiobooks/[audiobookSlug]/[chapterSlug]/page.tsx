@@ -32,7 +32,9 @@ export default async function AudiobookPage({
       <ChapterNav audiobook={audiobookSlug} />
       <ChapterHeading chapter={data?.chapterNumber} />
       <ChaptersNav audiobook={audiobookSlug} chapter={data?.chapterNumber} />
+      {data?.detail?.audioUrl == "none" && {
       <ChapterAudio audio={data?.detail?.audioUrl} />
+      }}
       <ChapterScript script={data?.detail?.content} />
       <ChaptersNav audiobook={audiobookSlug} chapter={data?.chapterNumber} />
     </main>
