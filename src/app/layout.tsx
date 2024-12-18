@@ -1,37 +1,41 @@
 import "./globals.css";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import dataOverview from "@/lib/data/dataOverview.json";
-
 import { getOverview } from "@/lib/action";
+
 export async function generateMetadata(): Promise<Metadata> {
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   return {
-    title: {
-      default: "Mabica Creative",
-      template: "%s - Mabica Creative",
-    },
+    title: "Mabica - Mari Bikin Cerita",
     description: dataOverview?.aboutDescription,
     openGraph: {
-      images: [dataOverview?.bannerImage], // Atau URL gambar yang sesuai
+      type: "website",
+      title: "Mabica - Mari Bikin Cerita",
+      description: dataOverview?.aboutDescription,
+      url: baseURL,
+      images: [
+        {
+          url: dataOverview?.bannerImage || `${baseURL}/default-banner.png`,
+          width: 1200,
+          height: 630,
+          alt: "Default banner image",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      images: [dataOverview?.bannerImage], // Atau URL gambar yang sesuai
+      title: "Mabica - Mari Bikin Cerita",
+      description: dataOverview?.aboutDescription,
+      images: [dataOverview?.bannerImage || `${baseURL}/default-banner.png`],
     },
-    icons: { icon: dataOverview?.logo },
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-    ), // Menggunakan env variable di sini
-  };
-}
-
-export async function generateViewport(): Promise<Viewport> {
-  const dataOverview = await getOverview();
-  return {
-    themeColor: dataOverview?.color, // Sudah benar di sini
+    icons: {
+      icon: dataOverview?.logo || `${baseURL}/favicon.ico`,
+    },
+    metadataBase: new URL(baseURL),
   };
 }
 
