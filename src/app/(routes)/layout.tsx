@@ -7,7 +7,7 @@ import { Navbar } from "@/components/layout/Navbar";
 
 const font = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({
+export default function RoutesLayout({
   children,
 }: {
   children: React.ReactNode;
