@@ -7,7 +7,7 @@ export default function SignInPage() {
       className="flex h-screen container justify-center items-center flex-col gap-2"
       action={async () => {
         "use server";
-        await signIn("google", { redirectTo: "/" });
+        await signIn("google", { redirectTo: "/dashboard" });
       }}
     >
       <Button type="submit">Signin with Google</Button>

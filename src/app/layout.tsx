@@ -1,64 +1,56 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import type { Metadata, Viewport } from "next";
 import dataOverview from "@/lib/data/dataOverview.json";
-import { getOverview } from "@/lib/action";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+export const metadata: Metadata = {
+  title: dataOverview.header || "Mabica Creative - Mari Bikin Cerita",
+  description:
+    dataOverview.headerDescription ||
+    "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+  openGraph: {
+    type: "website",
+    title: dataOverview.header || "Mabica Creative - Mari Bikin Cerita",
+    description:
+      dataOverview.headerDescription ||
+      "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+    url:
+      dataOverview.bannerLink ||
+      "https://mabica.vercel.app/audiobooks/occult-of-catalyst-shrouded-soul-teaser",
+    siteName: "Mabica Creative",
+    images: [
+      {
+        url: dataOverview.bannerImage || "/banner.png",
+        width: 800,
+        height: 600,
+        alt: "Banner utama Mabica Creative",
+      },
+      {
+        url: dataOverview.bannerImage || "/banner.png",
+        width: 1800,
+        height: 1600,
+        alt: "Banner besar Mabica Creative",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: dataOverview.header || "Mabica Creative - Mari Bikin Cerita",
+    description:
+      dataOverview.headerDescription ||
+      "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
+    siteId: "1234567890123456789",
+    creator: "@MabicaCreative",
+    creatorId: "1234567890123456789",
+    images: [dataOverview.bannerImage || "/banner.png"],
+  },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "https://mabica.vercel.app",
+  ),
+};
 
-  return {
-    title: "Mabica - Mari Bikin Cerita",
-    description: dataOverview?.aboutDescription,
-    openGraph: {
-      type: "website",
-      title: "Mabica - Mari Bikin Cerita",
-      description: dataOverview?.aboutDescription,
-      url: baseURL,
-      images: [
-        {
-          url: dataOverview?.bannerImage || `${baseURL}/default-banner.png`,
-          width: 1200,
-          height: 630,
-          alt: "Default banner image",
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Mabica - Mari Bikin Cerita",
-      description: dataOverview?.aboutDescription,
-      images: [dataOverview?.bannerImage || `${baseURL}/default-banner.png`],
-    },
-    icons: {
-      icon: dataOverview?.logo || `${baseURL}/favicon.ico`,
-    },
-    metadataBase: new URL(baseURL),
-  };
-}
-
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
-const font = Inter({ subsets: ["latin"] });
+export const viewport: Viewport = {
+  themeColor: "black",
+};
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang="en">
-      <body className={font.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-        <Analytics />
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }

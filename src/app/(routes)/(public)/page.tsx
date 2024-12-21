@@ -1,8 +1,8 @@
-import { Hero } from "./_components/Hero";
-import { Banner } from "./_components/Banner";
-import { About } from "./_components/About";
-import { Audiobook } from "./_components/Audiobook";
-import { Donation } from "./_components/Donation";
+import { Hero } from "@/components/page/home/Hero";
+import { Banner } from "@/components/page/home/Banner";
+import { About } from "@/components/page/home/About";
+import { Audiobook } from "@/components/page/home/Audiobook";
+import { Donation } from "@/components/page/home/Donation";
 import { getOverview } from "@/lib/action";
 
 export default async function HomePage() {
