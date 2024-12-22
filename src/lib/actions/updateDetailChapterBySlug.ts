@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-export async function updateDetailChapter(slug: string, data: any) {
+export async function updateDetailChapterBySlug(slug: string, data: any) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/chapters/${slug}`,
     {
