@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/cn";
-import { getAudiobookBySlug } from "@/lib/actions/getAudiobookBySlug";
+import { getAudiobookBySlug } from "@/lib/fetch/getAudiobookBySlug";
 
 import Link from "next/link";
 import Image from "next/image";

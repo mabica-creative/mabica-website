@@ -1,4 +1,4 @@
-import { signIn } from "@/lib/auth";
+import { signIn } from "@/lib/utils/auth";
 import { Button } from "@/components/ui/Button";
 
 export default function SignInPage() {
