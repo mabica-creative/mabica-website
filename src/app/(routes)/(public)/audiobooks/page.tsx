@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/cn";
 
 import { CardContainer } from "@/components/layout/CardContainer";
-import { AudiobooksNav } from "./_components/AudiobooksNav";
+import { AudiobooksNav } from "@/components/page/audiobooks/AudiobooksNav";
 import { getAudiobooks } from "@/lib/fetch/getAudiobooks";
 
 import { Audiobook } from "@prisma/client";

@@ -5,8 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
-import { AudiobookNav } from "./_components/AudiobookNav";
-import { ChaptersContainer } from "./_components/ChaptersContainer";
+import { AudiobookNav } from "@/components/page/audiobooks/AudiobookNav";
+import { ChaptersContainer } from "@/components/page/audiobooks/ChaptersContainer";
 
 export default async function AudiobookPage({
   params: { audiobookSlug },
@@ -21,7 +21,7 @@ export default async function AudiobookPage({
       </h1>
     );
   }
-  console.log(data);
+ // console.log(data);
 
   return (
     <>

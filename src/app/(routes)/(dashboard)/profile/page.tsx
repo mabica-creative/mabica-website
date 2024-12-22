@@ -1,6 +1,7 @@
-import { signOut, auth } from "@/lib/utils/auth";
+import { auth } from "@/lib/utils/auth";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import Link from "next/link"
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -37,20 +38,11 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <form
-          className="flex flex-col items-center gap-4"
-          action={async () => {
-            "use server";
-            await signOut();
-          }}
-        >
-          <Button
-            type="submit"
-            className="w-full py-3 text-center font-semibold"
-          >
-            Sign Out
+        <Link href="/sign-out">
+          <Button variant="outline" className="w-full self-end">
+            Sign In
           </Button>
-        </form>
+        </Link>
       </div>
     </section>
   );

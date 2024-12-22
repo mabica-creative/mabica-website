@@ -46,7 +46,7 @@ const NavMenu = ({ sessionImage }: NavMenuProps) => {
             <ThemeToggle />
           </nav>
           {sessionImage ? (
-            <Link href="/dashboard" className="flex">
+            <Link href="/profile" className="flex">
               <Button
                 variant="outline"
                 size="icon"

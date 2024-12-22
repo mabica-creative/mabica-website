@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils/cn";
 import { getChapterBySlug } from "@/lib/fetch/getChapterBySlug";
 
-import { ChapterNav } from "./_components/ChapterNav";
-import { ChaptersNav } from "./_components/ChaptersNav";
-import { ChapterHeading } from "./_components/ChapterHeading";
-import { ChapterAudio } from "./_components/ChapterAudio";
-import { ChapterScript } from "./_components/ChapterScript";
+import { ChapterNav } from "@/components/page/audiobooks/ChapterNav";
+import { ChaptersNav } from "@/components/page/audiobooks/ChaptersNav";
+import { ChapterHeading } from "@/components/page/audiobooks/ChapterHeading";
+import { ChapterAudio } from "@/components/page/audiobooks/ChapterAudio";
+import { ChapterScript } from "@/components/page/audiobooks/ChapterScript";
 
 export default async function ChapterPage({
   params: { chapterSlug },
