@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { Card } from "@/components/ui/Card";
 import type { Card as CardType } from "@/lib/interface/Card";
 

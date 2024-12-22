@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
-import { createAudiobook } from "@/lib/action";
+import { createAudiobook } from "@/lib/actions/createAudiobook";
 
 export function DialogCreateAudiobook() {
   const [title, setTitle] = useState("");

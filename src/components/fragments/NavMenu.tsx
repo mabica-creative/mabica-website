@@ -7,7 +7,18 @@ import { X, AlignRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/fragments/ThemeToggle";
 
-import { dataNavbar } from "@/lib/data/dataNavbar";
+interface links {
+  title: string;
+  href: string;
+}
+
+const dataNavbar: links[] = [
+  { title: "Home", href: "/#" },
+  { title: "About Us", href: "/#about" },
+  { title: "Previews", href: "/#audiobooks" },
+  { title: "Audiobooks", href: "/audiobooks" },
+  { title: "Donation", href: "/#donation" },
+];
 
 interface NavMenuProps {
   sessionImage?: string;

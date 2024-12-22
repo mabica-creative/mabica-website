@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { getOverview } from "@/lib/action";
-import { cn } from "@/lib/utils";
+import { getOverview } from "@/lib/fetch/getOverview";
+import { cn } from "@/lib/utils/cn"
 
 interface LogoProps {
   className?: string;

@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
-import { createChapter } from "@/lib/action";
+import { createChapter } from "@/lib/actions/createChapter";
 
 export function DialogCreateChapter({
   audiobookSlug,

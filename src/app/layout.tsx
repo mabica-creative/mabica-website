@@ -4,13 +4,13 @@ import dataOverview from "@/lib/data/dataOverview.json";
 export const metadata: Metadata = {
   title: dataOverview.header || "Mabica Creative - Mari Bikin Cerita",
   description:
-    dataOverview.headerDescription ||
+    dataOverview.aboutDescription ||
     "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
   openGraph: {
     type: "website",
     title: dataOverview.header || "Mabica Creative - Mari Bikin Cerita",
     description:
-      dataOverview.headerDescription ||
+      dataOverview.aboutDescription ||
       "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
     url:
       dataOverview.bannerLink ||
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: dataOverview.header || "Mabica Creative - Mari Bikin Cerita",
     description:
-      dataOverview.headerDescription ||
+      dataOverview.aboutDescription ||
       "Listening to stories as a practical way to enjoy the world of literature. Discover adventure through the sound of words.",
     siteId: "1234567890123456789",
     creator: "@MabicaCreative",

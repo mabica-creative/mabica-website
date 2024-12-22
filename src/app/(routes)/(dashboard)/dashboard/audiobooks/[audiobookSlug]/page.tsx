@@ -7,7 +7,8 @@ import { DialogUpdateDetailAudiobook } from "./../_components/DialogUpdateDetail
 import { DialogCreateChapter } from "./../_components/DialogCreateChapter";
 
 import { Audiobook, DetailAudiobook, Chapter } from "@prisma/client";
-import { getOneAudiobook, deleteAudiobook } from "@/lib/action";
+import { getAudiobookBySlug } from "@/lib/fetch/getAudiobookBySlug";
+import { deleteAudiobookBySlug } from "@/lib/actions/deleteAudiobookBySlug";
 
 interface DataInterfaceAudiobook extends Audiobook {
   detail: DetailAudiobook;
@@ -21,7 +22,7 @@ export default async function DetailAudiobookPage({
 }: {
   params: { audiobookSlug: string };
 }) {
-  const data: DataInterfaceAudiobook = await getOneAudiobook(slug);
+  const data: DataInterfaceAudiobook = await getAudiobookBySlug(slug);
   if (data.error) {
     return redirect("/404");
   }
@@ -42,7 +43,7 @@ export default async function DetailAudiobookPage({
           <form
             action={async () => {
               "use server";
-              await deleteAudiobook(data?.slug);
+              await deleteAudiobookBySlug(data?.slug);
               return redirect("/dashboard/audiobooks");
             }}
           >

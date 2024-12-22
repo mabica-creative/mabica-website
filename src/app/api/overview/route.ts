@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/utils/prisma";
 import { NextResponse } from "next/server";
 
 // GET: Ambil DataOverview dengan id=1
@@ -50,7 +50,7 @@ export async function PATCH(request: Request) {
       },
     });
 
-    console.log(data)
+    console.log(data);
     return NextResponse.json({ ...data });
   } catch (error) {
     console.error("Error upserting DataOverview:", error);

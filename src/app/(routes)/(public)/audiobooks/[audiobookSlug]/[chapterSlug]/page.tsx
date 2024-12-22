@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { getOneChapter } from "@/lib/action";
+import { cn } from "@/lib/utils/cn";
+import { getChapterBySlug } from "@/lib/fetch/getChapterBySlug";
 
 import { ChapterNav } from "./_components/ChapterNav";
 import { ChaptersNav } from "./_components/ChaptersNav";
@@ -12,7 +12,7 @@ export default async function ChapterPage({
 }: {
   params: { chapterSlug: string };
 }) {
-  const data = await getOneChapter(chapterSlug);
+  const data = await getChapterBySlug(chapterSlug);
   if (data.error) {
     return (
       <h1 className="container h-screen flex justify-center items-center">

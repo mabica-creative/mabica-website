@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { getAllAudiobooks } from "@/lib/action";
+import { getAudiobooks } from "@/lib/fetch/getAudiobooks";
 import { Audiobook } from "@prisma/client";
 import { DialogCreateAudiobook } from "./_components/DialogCreateAudiobook";
 
 export default async function AudiobooksPage() {
-  const audiobooks: Audiobook[] = await getAllAudiobooks();
+  const audiobooks: Audiobook[] = await getAudiobooks();
 
   return (
     <section className="container min-h-screen py-6">

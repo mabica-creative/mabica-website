@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
-import { updateOverview } from "@/lib/action";
+import { updateOverview } from "@/lib/actions/updateOverview";
 
 export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
   if (!dataOverview) {

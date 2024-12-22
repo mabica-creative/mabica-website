@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 
 import { DetailAudiobook } from "@prisma/client";
-import { updateDetailAudiobook } from "@/lib/action";
+import { updateDetailAudiobookBySlug } from "@/lib/actions/updateDetailAudiobookBySlug";
 
 export function DialogUpdateDetailAudiobook({
   audiobookSlug,
@@ -43,8 +43,8 @@ export function DialogUpdateDetailAudiobook({
               status: formData.get("status"),
             };
 
-            console.log(rawFormData);
-            await updateDetailAudiobook(audiobookSlug, rawFormData);
+            // console.log(rawFormData);
+            await updateDetailAudiobookBySlug(audiobookSlug, rawFormData);
           }}
         >
           <DialogHeader>

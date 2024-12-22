@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/utils/prisma";
 import { NextResponse } from "next/server";
 
 function generateRandomString(length: number) {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getOverview } from "@/lib/action";
+import { getOverview } from "@/lib/fetch/getOverview";
 import { DialogEditOverview } from "./_components/DialogEditOverview";
 
 export default async function OverviewPage() {

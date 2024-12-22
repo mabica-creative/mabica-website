@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { DialogUpdateChapter } from "./../../_components/DialogUpdateChapter";
 import { DialogUpdateDetailChapter } from "./../../_components/DialogUpdateDetailChapter";
-import { getOneChapter, deleteChapter } from "@/lib/action";
+import { getChapterBySlug } from "@/lib/fetch/getChapterBySlug";
+import { deleteChapterBySlug } from "@/lib/actions/deleteChapterBySlug";
 
 import { Chapter, DetailChapter } from "@prisma/client";
 
@@ -16,7 +17,7 @@ export default async function DetailChapterPage({
 }: {
   params: { chapterSlug: string };
 }) {
-  const data: DataInterfaceChapter = await getOneChapter(slug);
+  const data: DataInterfaceChapter = await getChapterBySlug(slug);
   if (!data || !data.slug) {
     return redirect("/404");
   }
@@ -43,7 +44,7 @@ export default async function DetailChapterPage({
             <form
               action={async () => {
                 "use server";
-                await deleteChapter(data?.slug);
+                await deleteChapterBySlug(data?.slug);
                 return redirect(`/dashboard/audiobooks`);
               }}
             >

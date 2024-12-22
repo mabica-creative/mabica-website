@@ -1,6 +1,18 @@
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
-import { dataNavbar } from "@/lib/data/dataNavbar";
+interface links {
+  title: string;
+  href: string;
+}
+
+const dataNavbar: links[] = [
+  { title: "Home", href: "/#" },
+  { title: "About Us", href: "/#about" },
+  { title: "Previews", href: "/#audiobooks" },
+  { title: "Audiobooks", href: "/audiobooks" },
+  { title: "Donation", href: "/#donation" },
+];
+
 import {
   FooterLinks,
   FooterLinksProps,

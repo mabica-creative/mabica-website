@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/utils/auth";
 import { Logo } from "@/components/ui/Logo";
 import { NavMenu } from "@/components/fragments/NavMenu";
 

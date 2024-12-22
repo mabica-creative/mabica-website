@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { getOneAudiobook } from "@/lib/action";
+import { cn } from "@/lib/utils/cn";
+import { getAudiobookBySlug } from "@/lib/actions/getAudiobookBySlug";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -13,7 +13,7 @@ export default async function AudiobookPage({
 }: {
   params: { audiobookSlug: string };
 }) {
-  const data = await getOneAudiobook(audiobookSlug);
+  const data = await getAudiobookBySlug(audiobookSlug);
   if (data.error) {
     return (
       <h1 className="container h-screen flex justify-center items-center">

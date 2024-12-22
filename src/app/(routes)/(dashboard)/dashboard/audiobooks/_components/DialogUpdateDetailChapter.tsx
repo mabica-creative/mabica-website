@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
 import { DetailChapter } from "@prisma/client";
-import { updateDetailChapter } from "@/lib/action";
+import { updateDetailChapterBySlug } from "@/lib/actions/updateDetailChapterBySlug";
 
 export function DialogUpdateDetailChapter({
   data,
@@ -46,8 +46,8 @@ export function DialogUpdateDetailChapter({
               audiobookId,
             };
 
-            console.log(rawFormData);
-            await updateDetailChapter(chapterSlug, rawFormData);
+            // console.log(rawFormData);
+            await updateDetailChapterBySlug(chapterSlug, rawFormData);
           }}
         >
           <DialogHeader>
