@@ -3,6 +3,11 @@ import { cn } from "@/lib/utils/cn";
 import { CardContainer } from "@/components/layout/CardContainer";
 import { AudiobooksNav } from "@/components/page/audiobooks/AudiobooksNav";
 import { getAudiobooks } from "@/lib/fetch/getAudiobooks";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Audiobooks",
+};
 
 import { Audiobook } from "@prisma/client";
 import type { Card as CardType } from "@/lib/interface/Card";

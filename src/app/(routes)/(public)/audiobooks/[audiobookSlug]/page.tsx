@@ -8,6 +8,12 @@ import { Button } from "@/components/ui/Button";
 import { AudiobookNav } from "@/components/page/audiobooks/AudiobookNav";
 import { ChaptersContainer } from "@/components/page/audiobooks/ChaptersContainer";
 
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Audiobook',
+}
+
 export default async function AudiobookPage({
   params: { audiobookSlug },
 }: {
