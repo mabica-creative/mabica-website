@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { getAudiobooks } from "@/lib/fetch/getAudiobooks";
 import { Audiobook } from "@prisma/client";
-import { DialogCreateAudiobook } from "./_components/DialogCreateAudiobook";
+import { DialogCreateAudiobook } from "@/components/page/dashboard/DialogCreateAudiobook";
 
 export default async function AudiobooksPage() {
   const audiobooks: Audiobook[] = await getAudiobooks();

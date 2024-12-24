@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { DialogUpdateChapter } from "./../../_components/DialogUpdateChapter";
-import { DialogUpdateDetailChapter } from "./../../_components/DialogUpdateDetailChapter";
+import { DialogUpdateChapter } from "@/components/page/dashboard/DialogUpdateChapter";
+import { DialogUpdateDetailChapter } from "@/components/page/dashboard/DialogUpdateDetailChapter";
 import { getChapterBySlug } from "@/lib/fetch/getChapterBySlug";
 import { deleteChapterBySlug } from "@/lib/actions/deleteChapterBySlug";
 

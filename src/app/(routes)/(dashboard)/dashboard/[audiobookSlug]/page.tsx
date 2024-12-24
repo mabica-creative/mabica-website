@@ -2,9 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { DialogUpdateAudiobook } from "./../_components/DialogUpdateAudiobook";
-import { DialogUpdateDetailAudiobook } from "./../_components/DialogUpdateDetailAudiobook";
-import { DialogCreateChapter } from "./../_components/DialogCreateChapter";
+import { DialogUpdateAudiobook } from "@/components/page/dashboard/DialogUpdateAudiobook";
+import { DialogUpdateDetailAudiobook } from "@/components/page/dashboard/DialogUpdateDetailAudiobook";
+import { DialogCreateChapter } from "@/components/page/dashboard/DialogCreateChapter";
 
 import { Audiobook, DetailAudiobook, Chapter } from "@prisma/client";
 import { getAudiobookBySlug } from "@/lib/fetch/getAudiobookBySlug";
