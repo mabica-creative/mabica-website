@@ -2,50 +2,54 @@ import { auth } from "@/lib/utils/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const allowedOrigins = process.env.NEXT_PUBLIC_BASE_URL?.split(",") || [
-  "http://localhost:3000",
-];
+// Variabel rute untuk berbagai jenis akses
+const routes = {
+  userRoutes: ["/profile", "/sign-out"], // Rute untuk user yang sudah login
+  adminRoutes: ["/dashboard", "/overview"], // Rute untuk admin
+  authRoutes: ["/sign-in", "/sign-out"], // Rute untuk login dan logout
+};
 
 export async function middleware(req: NextRequest) {
-  const origin = req.headers.get("origin");
-
-  // Periksa apakah origin ada dalam daftar yang diizinkan
-  if (origin && !allowedOrigins.includes(origin)) {
-    return new NextResponse("CORS Error: Origin not allowed", { status: 403 });
-  }
-
   const session = await auth();
 
   // Ambil email yang diizinkan dari variabel lingkungan
   const allowedEmails = process.env.ALLOWED_EMAILS?.split(",") || [];
 
-  // Proteksi login
-  if (!session && req.nextUrl.pathname.startsWith("/dashboard")) {
-    console.log(session);
-    const newUrl = new URL("/sign-in", req.nextUrl.origin);
-    return NextResponse.redirect(newUrl);
+  // Proteksi untuk halaman user (rute dalam userRoutes)
+  if (session && routes.userRoutes.includes(req.nextUrl.pathname)) {
+    if (req.nextUrl.pathname === "/sign-in") {
+      const newUrl = new URL("/dashboard", req.nextUrl.origin);
+      return NextResponse.redirect(newUrl); // Arahkan ke dashboard jika sudah login
+    }
   }
 
-  // Cek apakah email pengguna tidak ada dalam daftar yang diizinkan
+  // Proteksi halaman untuk user yang belum login (hanya untuk /sign-in dan /sign-out)
+  if (!session && routes.userRoutes.includes(req.nextUrl.pathname)) {
+    if (req.nextUrl.pathname === "/sign-out") {
+      return new NextResponse("You need to be logged in to access this page.", {
+        status: 403,
+      });
+    } else if (req.nextUrl.pathname !== "/sign-in") {
+      const newUrl = new URL("/sign-in", req.nextUrl.origin);
+      return NextResponse.redirect(newUrl); // Arahkan ke sign-in jika belum login
+    }
+  }
+
+  // Proteksi halaman admin (rute dalam adminRoutes) hanya untuk admin yang emailnya ada dalam allowedEmails
   if (
-    (!session ||
-      !session.user ||
-      !allowedEmails.includes(session.user.email as string)) &&
-    req.nextUrl.pathname.startsWith("/dashboard")
+    session &&
+    routes.adminRoutes.includes(req.nextUrl.pathname) &&
+    !allowedEmails.includes(session.user.email as string)
   ) {
-    const newUrl = new URL("/sign-out", req.nextUrl.origin); // Ganti dengan halaman akses ditolak
-    return NextResponse.redirect(newUrl);
-  }
-
-  // Jika sudah login dan mengakses halaman sign-in, arahkan ke dashboard
-  if (session && req.nextUrl.pathname.startsWith("/sign-in")) {
-    const newUrl = new URL("/dashboard", req.nextUrl.origin);
-    return NextResponse.redirect(newUrl);
+    const newUrl = new URL("/sign-out", req.nextUrl.origin);
+    return NextResponse.redirect(newUrl); // Redirect ke halaman sign-out jika email tidak terdaftar
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico).*)", // Menyesuaikan dengan rute yang disebutkan
+  ],
 };

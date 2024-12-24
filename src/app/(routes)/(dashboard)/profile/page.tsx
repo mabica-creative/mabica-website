@@ -40,7 +40,7 @@ export default async function DashboardPage() {
 
         <Link href="/sign-out">
           <Button variant="outline" className="w-full self-end">
-            Sign In
+            Sign Out
           </Button>
         </Link>
       </div>
