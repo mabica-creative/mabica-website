@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getOverview } from "@/lib/fetch/getOverview";
-import { DialogEditOverview } from "./_components/DialogEditOverview";
+import { DialogEditOverview } from "@/components/page/dashboard/DialogEditOverview";
 
 export default async function OverviewPage() {
   const dataOverview = await getOverview({ cache: "no-cache" });
