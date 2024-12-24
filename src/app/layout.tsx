@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     creatorId: "1234567890123456789",
     images: [dataOverview.bannerImage],
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
 };
 
 export const viewport: Viewport = {
