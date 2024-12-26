@@ -1,11 +1,15 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 export async function deleteChapterBySlug(slug: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/chapters/${slug}`,
-    { method: "DELETE" },
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${process.env.AUTH_SECRET}`,
+      },
+    },
   );
-  return await res.json();
+  const result = await res.json();
+  return result;
 }

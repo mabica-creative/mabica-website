@@ -1,5 +1,7 @@
 "use client";
 
+import { useToast } from "@/hooks/use-toast";
+
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -14,9 +16,11 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
+
 import { updateOverview } from "@/lib/actions/updateOverview";
 
 export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
+  const { toast } = useToast();
   if (!dataOverview) {
     return <p>Data overview tidak tersedia.</p>;
   }
@@ -30,8 +34,12 @@ export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
         <form
           action={async (formData: FormData) => {
             const rawFormData = Object.fromEntries(formData.entries());
-            console.log({rawFormData});
             await updateOverview(rawFormData);
+            toast({
+              title: "Overview Updated",
+              description: "Clone Dialog Now",
+            });
+            window.location.reload();
           }}
         >
           <DialogHeader>

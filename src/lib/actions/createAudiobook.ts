@@ -1,7 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 export async function createAudiobook(data: any) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/audiobooks`,
@@ -9,12 +7,11 @@ export async function createAudiobook(data: any) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.AUTH_SECRET}`,
       },
-      body: JSON.stringify(data), // Mengirim data dalam bentuk JSON
+      body: JSON.stringify(data),
     },
   );
   const result = await res.json();
-  // console.log(result)
-  return redirect(`/dashboard/audiobooks/${result?.slug}`);
+  return result
 }
-

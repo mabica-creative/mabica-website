@@ -7,11 +7,11 @@ import { ChapterHeading } from "@/components/page/audiobooks/ChapterHeading";
 import { ChapterAudio } from "@/components/page/audiobooks/ChapterAudio";
 import { ChapterScript } from "@/components/page/audiobooks/ChapterScript";
 
-import type { Metadata } from 'next'
- 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
-  title: 'Chapter',
-}
+  title: "Chapter",
+};
 
 export default async function ChapterPage({
   params: { chapterSlug },

@@ -1,5 +1,7 @@
 "use client";
 
+import { useToast } from "@/hooks/use-toast";
+
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -26,6 +28,7 @@ export function DialogUpdateDetailAudiobook({
   audiobookId: number;
   data: DetailAudiobook;
 }) {
+  const { toast } = useToast();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,8 +46,12 @@ export function DialogUpdateDetailAudiobook({
               status: formData.get("status"),
             };
 
-            // console.log(rawFormData);
             await updateDetailAudiobookBySlug(audiobookSlug, rawFormData);
+            toast({
+              title: "Detail Audiobook is Updated",
+              description: "Clone Dialog Now",
+            });
+            window.location.reload();
           }}
         >
           <DialogHeader>

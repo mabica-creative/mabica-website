@@ -1,62 +1,39 @@
 import { prisma } from "@/lib/utils/prisma";
 import { NextResponse } from "next/server";
+import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
-// GET: Ambil DataOverview dengan id=1
-export async function GET() {
+export async function GET(request) {
   try {
-    const data = await prisma.dataOverview.findUnique({
-      where: { id: 1 },
-    });
-
-    if (!data) {
-      return NextResponse.json(
-        { error: "DataOverview with id=1 not found." },
-        { status: 404 },
-      );
+    if (!authenticate(request)) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
     }
 
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("Error fetching DataOverview:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch DataOverview." },
-      { status: 500 },
-    );
+    const data = await prisma.dataOverview.findUnique({ where: { id: 1 } });
+    return data
+      ? NextResponse.json(data)
+      : NextResponse.json({ error: "Not found." }, { status: 404 });
+  } catch {
+    return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
 }
 
-// Upsert DataOverview dengan id=1
-export async function PATCH(request: Request) {
+export async function PATCH(request) {
   try {
-    const body = await request.json();
-
-    if (!body || typeof body !== "object") {
-      return NextResponse.json(
-        { error: "Invalid request body." },
-        { status: 400 },
-      );
+    if (!authenticate(request)) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
     }
 
-    // Lakukan upsert pada database Prisma
+    const body = await request.json();
+    if (!body || typeof body !== "object") {
+      return NextResponse.json({ error: "Invalid body." }, { status: 400 });
+    }
     const data = await prisma.dataOverview.upsert({
       where: { id: 1 },
-      update: {
-        ...body,
-        updatedAt: new Date(), // Perbarui waktu
-      },
-      create: {
-        ...body,
-        createdAt: new Date(),
-      },
+      update: { ...body, updatedAt: new Date() },
+      create: { ...body, createdAt: new Date() },
     });
-
-    console.log(data);
-    return NextResponse.json({ ...data });
-  } catch (error) {
-    console.error("Error upserting DataOverview:", error);
-    return NextResponse.json(
-      { error: "Failed to upsert DataOverview." },
-      { status: 500 },
-    );
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
 }

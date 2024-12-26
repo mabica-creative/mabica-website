@@ -45,7 +45,7 @@ export default async function DetailChapterPage({
               action={async () => {
                 "use server";
                 await deleteChapterBySlug(data?.slug);
-                return redirect(`/dashboard/audiobooks`);
+                return redirect(`/dashboard/${audiobookSlug}`);
               }}
             >
               <Button variant="outline" type="submit">

@@ -1,49 +1,43 @@
 import { prisma } from "@/lib/utils/prisma";
 import { NextResponse } from "next/server";
+import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
-    const body = await request.json();
-
-    // Validasi: cek jika body kosong atau ada field yang tidak terisi
-    const requiredFields = ["chapterNumber", "slug"];
-    for (const field of requiredFields) {
-      if (!body[field]) {
-        return NextResponse.json(
-          { error: `${field} is required` },
-          { status: 400 },
-        );
-      }
+    if (!authenticate(request)) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
     }
 
-    // Cek ketersediaan slug
-    const existingChapter = await prisma.chapter.findUnique({
-      where: { slug: body.slug },
-    });
+    const body = await request.json();
+    const { chapterNumber, slug, audiobookId } = body;
 
-    if (existingChapter) {
+    if (!chapterNumber || !slug || !audiobookId) {
       return NextResponse.json(
-        { error: "Slug already exists. Please choose another slug." },
+        { error: "chapterNumber, slug, and audiobookId are required." },
         { status: 400 },
       );
     }
 
-    // Buat chapter baru dan detail chapter
+    const existingChapter = await prisma.chapter.findUnique({
+      where: { slug },
+    });
+    if (existingChapter) {
+      return NextResponse.json(
+        { error: "Slug already exists." },
+        { status: 400 },
+      );
+    }
+
     const upChapter = await prisma.chapter.create({
       data: {
-        chapterNumber: +body.chapterNumber,
-        slug: body.slug,
-        audiobookId: +body.audiobookId,
+        chapterNumber: +chapterNumber,
+        slug,
+        audiobookId: +audiobookId,
       },
     });
 
-    // Keluarkan hasil
     return NextResponse.json(upChapter);
-  } catch (error) {
-    console.error("Invalid JSON format:", error);
-    return NextResponse.json(
-      { error: "Invalid JSON format or Absulutly error" },
-      { status: 400 },
-    );
+  } catch {
+    return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
 }

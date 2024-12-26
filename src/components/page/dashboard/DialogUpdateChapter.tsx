@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -33,6 +34,7 @@ export function DialogUpdateChapter({
   const [number, setNumber] = useState<number>();
   const [slug, setSlug] = useState("");
 
+  const { toast } = useToast();
   // Generate slug in real-time whenever the title changes
   useEffect(() => {
     if (!number) {
@@ -57,8 +59,12 @@ export function DialogUpdateChapter({
               audiobookId,
             };
 
-            // console.log(rawFormData);
             await updateChapterBySlug(data?.slug, rawFormData);
+            toast({
+              title: "Chapter is Updated",
+              description: "Clone Dialog Now",
+            });
+            window.location.href = `/dashboard/${audiobookSlug}/${slug}`;
           }}
         >
           <DialogHeader>

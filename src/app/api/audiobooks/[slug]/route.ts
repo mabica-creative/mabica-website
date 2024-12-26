@@ -1,69 +1,83 @@
 import { prisma } from "@/lib/utils/prisma";
 import { NextResponse } from "next/server";
+import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
 export async function GET(
-  _: Request,
+  request,
   { params: { slug } }: { params: { slug: string } },
 ) {
-  const data = await prisma.audiobook.findUnique({
-    where: {
-      slug,
-      deleted: false,
-    },
-    include: {
-      detail: true,
-      chapters: {
-        where: { deleted: false },
-        orderBy: {
-          chapterNumber: "asc", // urutkan berdasarkan chapterNumber dari yang terkecil
+  try {
+    if (!authenticate(request)) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+    }
+
+    const data = await prisma.audiobook.findUnique({
+      where: {
+        slug,
+        deleted: false,
+      },
+      include: {
+        detail: true,
+        chapters: {
+          where: { deleted: false },
+          orderBy: {
+            chapterNumber: "asc", // urutkan berdasarkan chapterNumber dari yang terkecil
+          },
         },
       },
-    },
-  });
+    });
 
-  if (!data) {
-    return NextResponse.json(
-      {
-        error: "Audiobook is not found",
-      },
-      { status: 400 },
-    );
+    if (!data) {
+      return NextResponse.json(
+        { error: "Audiobook is not found" },
+        { status: 400 },
+      );
+    }
+
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
-
-  return NextResponse.json(data);
 }
 
 export async function DELETE(
-  _: Request,
+  request,
   { params: { slug } }: { params: { slug: string } },
 ) {
-  const data = await prisma.audiobook.update({
-    where: {
-      slug,
-    },
-    data: { deleted: true },
-  });
+  try {
+    if (!authenticate(request)) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+    }
 
-  if (!data) {
-    return NextResponse.json(
-      {
-        error: "Audiobook is not found",
-      },
-      { status: 400 },
-    );
+    const data = await prisma.audiobook.update({
+      where: { slug },
+      data: { deleted: true },
+    });
+
+    if (!data) {
+      return NextResponse.json(
+        { error: "Audiobook is not found" },
+        { status: 400 },
+      );
+    }
+
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
-
-  return NextResponse.json(data);
 }
 
 export async function PATCH(
-  request: Request,
+  request,
   { params: { slug: audiobookSlug } }: { params: { slug: string } },
 ) {
   try {
+    if (!authenticate(request)) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+    }
+
     const body = await request.json();
 
-    // Validasi ID
     if (!body.id) {
       return NextResponse.json(
         { error: "Audiobook ID is required" },
@@ -71,14 +85,9 @@ export async function PATCH(
       );
     }
 
-    // Log data yang akan dikirim ke Prisma
-    console.log("Updating audiobook with slug:", audiobookSlug);
-    console.log("Audiobook data:", body);
-
     let updatedAudiobook = null;
     let updatedDetailAudiobook = null;
 
-    // Perbarui data di tabel audiobook
     if (body.title || body.slug || body.imageUrl || body.synopsis) {
       updatedAudiobook = await prisma.audiobook.update({
         where: { slug: audiobookSlug, deleted: false },
@@ -91,7 +100,6 @@ export async function PATCH(
       });
     }
 
-    // Perbarui atau buat data di tabel detailAudiobook
     if (
       body.author ||
       body.editor ||
@@ -127,10 +135,9 @@ export async function PATCH(
     }
 
     return NextResponse.json({ updatedAudiobook, updatedDetailAudiobook });
-  } catch (error) {
-    console.error("Error in PATCH request:", error);
+  } catch {
     return NextResponse.json(
-      { error: "Update failed or invalid request.", details: error },
+      { error: "Update failed or invalid request." },
       { status: 400 },
     );
   }

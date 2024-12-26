@@ -1,7 +1,10 @@
-export async function getOverview(cache = {}) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/overview`,
-    cache,
-  );
-  return await res.json();
+export async function getOverview() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/overview`, {
+    cache: "no-cache",
+    headers: {
+      Authorization: `Bearer ${process.env.AUTH_SECRET}`,
+    },
+  });
+  const result = await res.json();
+  return result;
 }

@@ -1,16 +1,14 @@
-"use server";
-
-import { redirect } from "next/navigation";
+"use server"
 
 export async function createChapter(data: any) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/chapters`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.AUTH_SECRET}`,
     },
-    body: JSON.stringify(data), // Mengirim data dalam bentuk JSON
+    body: JSON.stringify(data),
   });
   const result = await res.json();
-  // console.log(result);
-  redirect("/dashboard/audiobooks/");
+  return result;
 }

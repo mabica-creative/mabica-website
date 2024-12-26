@@ -24,9 +24,6 @@ export default async function DetailAudiobookPage({
   params: { audiobookSlug: string };
 }) {
   const data: DataInterfaceAudiobook = await getAudiobookBySlug(slug);
-  if (data.error) {
-    return redirect("/404");
-  }
 
   return (
     <section className="container min-h-screen py-12">
@@ -45,7 +42,7 @@ export default async function DetailAudiobookPage({
             action={async () => {
               "use server";
               await deleteAudiobookBySlug(data?.slug);
-              return redirect("/dashboard/audiobooks");
+              return redirect("/dashboard");
             }}
           >
             <Button variant="outline" type="submit" className="py-2 px-4">
@@ -137,7 +134,7 @@ export default async function DetailAudiobookPage({
               {/* Buttons */}
               <div className="flex space-x-2 mt-4">
                 <Link
-                  href={`/dashboard/audiobooks/${data?.slug}/${chapter?.slug}`}
+                  href={`/dashboard/${data?.slug}/${chapter?.slug}`}
                 >
                   <Button variant="outline" className="py-2 px-4">
                     Detail

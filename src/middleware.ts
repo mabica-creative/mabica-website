@@ -25,7 +25,9 @@ export async function middleware(req: NextRequest) {
 
   // Proteksi halaman untuk user yang belum login (hanya untuk /sign-in dan /sign-out)
   if (!session?.user) {
-    if (routes.userRoutes.includes(req.nextUrl.pathname)) {
+    if (
+      routes.userRoutes.some((route) => req.nextUrl.pathname.startsWith(route))
+    ) {
       if (req.nextUrl.pathname === "/sign-out") {
         return new NextResponse(
           "You need to be logged in to access this page.",
@@ -43,7 +45,8 @@ export async function middleware(req: NextRequest) {
   // Proteksi halaman admin (rute dalam adminRoutes) hanya untuk admin yang emailnya ada dalam allowedEmails
   if (
     session?.user &&
-    routes.adminRoutes.includes(req.nextUrl.pathname) &&
+    (req.nextUrl.pathname.startsWith("/dashboard") ||
+      req.nextUrl.pathname.startsWith("/overview")) &&
     !allowedEmails.includes(session.user.email ?? "")
   ) {
     const newUrl = new URL("/sign-out", req.nextUrl.origin);

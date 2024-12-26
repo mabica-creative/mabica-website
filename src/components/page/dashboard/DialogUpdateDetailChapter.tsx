@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -31,6 +32,7 @@ export function DialogUpdateDetailChapter({
   chapterSlug: string;
   audiobookId: number;
 }) {
+  const { toast } = useToast();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -46,8 +48,12 @@ export function DialogUpdateDetailChapter({
               audiobookId,
             };
 
-            // console.log(rawFormData);
             await updateDetailChapterBySlug(chapterSlug, rawFormData);
+            toast({
+              title: "Detail Chapter is Updated",
+              description: "Clone Dialog Now",
+            });
+            window.location.reload();
           }}
         >
           <DialogHeader>

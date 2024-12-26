@@ -42,7 +42,7 @@ export default async function AudiobooksPage() {
               </td>
               <td className="px-4 py-2">{data?.synopsis}</td>
               <td className="px-4 py-2 text-right space-x-2">
-                <Link href={`/dashboard/audiobooks/${data?.slug}`}>
+                <Link href={`/dashboard/${data?.slug}`}>
                   <Button variant="outline">Details</Button>
                 </Link>
                 <Link href={`/audiobooks/${data?.slug}`}>
