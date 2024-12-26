@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/utils/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
 export async function GET(
-  request,
+  request: NextRequest,
   { params: { slug } }: { params: { slug: string } },
 ) {
   try {
@@ -41,7 +41,7 @@ export async function GET(
 }
 
 export async function DELETE(
-  request,
+  request: NextRequest,
   { params: { slug } }: { params: { slug: string } },
 ) {
   try {
@@ -68,7 +68,7 @@ export async function DELETE(
 }
 
 export async function PATCH(
-  request,
+  request: NextRequest,
   { params: { slug: audiobookSlug } }: { params: { slug: string } },
 ) {
   try {

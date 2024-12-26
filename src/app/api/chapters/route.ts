@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/utils/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -18,6 +18,7 @@ export async function POST(request) {
       );
     }
 
+    // Mengecek apakah chapter dengan slug yang sama sudah ada
     const existingChapter = await prisma.chapter.findUnique({
       where: { slug },
     });
@@ -28,11 +29,12 @@ export async function POST(request) {
       );
     }
 
+    // Membuat chapter baru
     const upChapter = await prisma.chapter.create({
       data: {
-        chapterNumber: +chapterNumber,
+        chapterNumber: +chapterNumber, // Mengonversi ke tipe number
         slug,
-        audiobookId: +audiobookId,
+        audiobookId: +audiobookId, // Mengonversi ke tipe number
       },
     });
 

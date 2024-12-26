@@ -3,7 +3,7 @@ import { getOverview } from "@/lib/fetch/getOverview";
 import { DialogEditOverview } from "@/components/page/dashboard/DialogEditOverview";
 
 export default async function OverviewPage() {
-  const dataOverview = await getOverview({ cache: "no-cache" });
+  const dataOverview = await getOverview();
 
   return (
     <section className="container min-h-screen py-6">

@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/utils/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
-export async function GET(request) {
+export async function GET(request: NextRequest) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -18,7 +18,7 @@ export async function GET(request) {
   }
 }
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });

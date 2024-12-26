@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/utils/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
-export async function GET(request) {
+// GET untuk mendapatkan data overview
+export async function GET(request: NextRequest) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -17,7 +18,8 @@ export async function GET(request) {
   }
 }
 
-export async function PATCH(request) {
+// PATCH untuk memperbarui atau membuat data overview
+export async function PATCH(request: NextRequest) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -27,6 +29,7 @@ export async function PATCH(request) {
     if (!body || typeof body !== "object") {
       return NextResponse.json({ error: "Invalid body." }, { status: 400 });
     }
+
     const data = await prisma.dataOverview.upsert({
       where: { id: 1 },
       update: { ...body, updatedAt: new Date() },

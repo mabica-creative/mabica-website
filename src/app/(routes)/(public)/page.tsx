@@ -6,7 +6,7 @@ import { Donation } from "@/components/page/home/Donation";
 import { getOverview } from "@/lib/fetch/getOverview";
 
 export default async function HomePage() {
-  const dataOverview = await getOverview({ cache: "no-cache" });
+  const dataOverview = await getOverview();
 
   return (
     <>

@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/utils/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 
-function generateRandomString(length) {
+// Fungsi untuk menghasilkan string acak
+function generateRandomString(length: number): string {
   const charset =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
@@ -13,7 +14,10 @@ function generateRandomString(length) {
   return result;
 }
 
-export async function GET(request, { params: { slug } }) {
+export async function GET(
+  request: NextRequest,
+  { params: { slug } }: { params: { slug: string } },
+) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -32,7 +36,10 @@ export async function GET(request, { params: { slug } }) {
   }
 }
 
-export async function DELETE(request, { params: { slug } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params: { slug } }: { params: { slug: string } },
+) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -52,7 +59,10 @@ export async function DELETE(request, { params: { slug } }) {
   }
 }
 
-export async function PATCH(request, { params: { slug: chapterSlug } }) {
+export async function PATCH(
+  request: NextRequest,
+  { params: { slug: chapterSlug } }: { params: { slug: string } },
+) {
   try {
     if (!authenticate(request)) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
