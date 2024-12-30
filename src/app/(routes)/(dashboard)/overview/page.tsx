@@ -15,7 +15,7 @@ export default async function OverviewPage() {
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse border border-gray-300">
           <thead>
-            <tr className="text-left bg-gray-100">
+            <tr className="text-left bg-foreground/20">
               <th className="px-4 py-2 font-medium border-b border-gray-300">
                 Key
               </th>
@@ -26,7 +26,7 @@ export default async function OverviewPage() {
           </thead>
           <tbody>
             {Object.entries(dataOverview).map(([key, value]) => (
-              <tr key={key + value} className="hover:bg-gray-50">
+              <tr key={key + value} className="hover:bg-foreground/20">
                 <td className="px-4 py-2 font-medium border-b border-gray-300">
                   {key}
                 </td>
@@ -48,7 +48,6 @@ export default async function OverviewPage() {
                     <div className="flex items-center space-x-4">
                       <div
                         className="inline-block h-5 w-5 rounded-full"
-                        style={{ backgroundColor: value }}
                       ></div>
                     </div>
                   ) : typeof value === "string" ? (

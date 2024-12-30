@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { User, PieChart, Users, LayoutDashboard } from "lucide-react";
 
 export function Sidebar() {
-  const pathname = usePathname(); // Mendapatkan URL aktif
-  console.log();
+  const pathname: string = usePathname(); // Mendapatkan URL aktif
 
   const links = [
     { href: "/profile", label: "Profile", Icon: User },
