@@ -15,42 +15,28 @@ export async function middleware(req: NextRequest) {
   // Ambil email yang diizinkan dari variabel lingkungan
   const allowedEmails = process.env.ALLOWED_EMAILS?.split(",") || [];
 
-  // Proteksi untuk halaman user (rute dalam userRoutes)
-  if (session?.user && routes.userRoutes.includes(req.nextUrl.pathname)) {
-    if (req.nextUrl.pathname === "/sign-in") {
-      const newUrl = new URL("/dashboard", req.nextUrl.origin);
-      return NextResponse.redirect(newUrl); // Arahkan ke dashboard jika sudah login
+  const pathname = req.nextUrl.pathname;
+
+  // Proteksi untuk halaman admin (hanya admin yang emailnya ada dalam allowedEmails)
+  if (routes.adminRoutes.some((route) => pathname.startsWith(route))) {
+    if (!session?.user || !allowedEmails.includes(session.user.email ?? "")) {
+      const newUrl = new URL("/sign-in", req.nextUrl.origin); // Redirect ke sign-in jika tidak diizinkan
+      return NextResponse.redirect(newUrl);
     }
   }
 
-  // Proteksi halaman untuk user yang belum login (hanya untuk /sign-in dan /sign-out)
-  if (!session?.user) {
-    if (
-      routes.userRoutes.some((route) => req.nextUrl.pathname.startsWith(route))
-    ) {
-      if (req.nextUrl.pathname === "/sign-out") {
-        return new NextResponse(
-          "You need to be logged in to access this page.",
-          {
-            status: 403,
-          },
-        );
-      } else if (req.nextUrl.pathname !== "/sign-in") {
-        const newUrl = new URL("/sign-in", req.nextUrl.origin);
-        return NextResponse.redirect(newUrl); // Arahkan ke sign-in jika belum login
-      }
+  // Proteksi untuk halaman user yang harus login
+  if (routes.userRoutes.some((route) => pathname.startsWith(route))) {
+    if (!session?.user) {
+      const newUrl = new URL("/sign-in", req.nextUrl.origin); // Redirect ke sign-in jika belum login
+      return NextResponse.redirect(newUrl);
     }
   }
 
-  // Proteksi halaman admin (rute dalam adminRoutes) hanya untuk admin yang emailnya ada dalam allowedEmails
-  if (
-    session?.user &&
-    (req.nextUrl.pathname.startsWith("/dashboard") ||
-      req.nextUrl.pathname.startsWith("/overview")) &&
-    !allowedEmails.includes(session.user.email ?? "")
-  ) {
-    const newUrl = new URL("/sign-out", req.nextUrl.origin);
-    return NextResponse.redirect(newUrl); // Redirect ke halaman sign-out jika email tidak terdaftar
+  // Halaman login (redirect jika user sudah login)
+  if (pathname === "/sign-in" && session?.user) {
+    const newUrl = new URL("/dashboard", req.nextUrl.origin);
+    return NextResponse.redirect(newUrl);
   }
 
   return NextResponse.next();
