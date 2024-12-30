@@ -30,7 +30,7 @@ export function DialogEditOverview({ dataOverview }: { dataOverview: any }) {
       <DialogTrigger asChild>
         <Button>Edit Overview</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl">
+      <DialogContent className="sm:max-w-3xl h-5/6 md:h-min overflow-auto">
         <form
           action={async (formData: FormData) => {
             const rawFormData = Object.fromEntries(formData.entries());

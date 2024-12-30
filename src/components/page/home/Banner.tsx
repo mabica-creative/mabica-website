@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export async function Banner({dataOverview}: any) {
-
+export async function Banner({ dataOverview }: any) {
   return (
     <section id="banner" className="container py-5">
       <div className="overflow-hidden rounded-xl w-full">
@@ -13,6 +12,7 @@ export async function Banner({dataOverview}: any) {
             alt="audiobook banner"
             width="1200"
             height="600"
+            loading="eager"
           />
         </Link>
       </div>

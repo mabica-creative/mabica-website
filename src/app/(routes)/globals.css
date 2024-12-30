@@ -24,11 +24,9 @@
     --input: 240 5.9% 90%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 1rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --primary-color: hsl(var(--primary));
+    --scrollbar-track: #f0f0f0; /* Default track color */
+    --scrollbar-thumb: var(--primary-color); /* Default thumb color */
   }
 
   .dark {
@@ -51,20 +49,9 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-    /*    box-sizing: border-box;
-    background: rgb(0 100 0 / 0.6);
-*/
+    --primary-color: hsl(var(--primary));
+    --scrollbar-track: #2d2d2d; /* Dark mode track color */
+    --scrollbar-thumb: var(--primary-color); /* Dark mode thumb color */
   }
 
   body {
@@ -76,14 +63,39 @@
 
   .background {
     background-image: url(/bg.svg);
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
   }
 }
 
+/* Ukuran font untuk layar besar */
 @media (min-width: 1024px) {
   :root {
     font-size: 18px;
   }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+  height: 8px; /* Tinggi scrollbar horizontal */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb); /* Thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid transparent; /* Adds padding inside the thumb */
+  background-clip: padding-box; /* Prevent border from covering the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track); /* Track color */
+  border-radius: 10px; /* Match the thumb's rounded corners */
+}
+
+/* Scrollbar styles for Firefox */
+* {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
