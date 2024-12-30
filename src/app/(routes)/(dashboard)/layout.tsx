@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/layout/Sidebar";
+import { AuthAdmin } from "@/components/layout/AuthAdmin";
 
 export default function DashboardLayout({
   children,
@@ -7,7 +8,9 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <Sidebar />
+      <AuthAdmin>
+        <Sidebar />
+      </AuthAdmin>
       {children}
     </>
   );
