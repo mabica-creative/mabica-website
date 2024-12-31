@@ -51,7 +51,7 @@ export default async function ProfilePage() {
       </section>
 
       {/* Audiobooks Section */}
-      <section className="container flex flex-col gap-4 py-10" id="audiobooks">
+      <section className="container flex flex-col gap-4 py-10 md:py-24" id="audiobooks">
         <hr />
         <h2 className="text-xl font-semibold lg:text-3xl text-center md:text-left">
           #Bookmark
