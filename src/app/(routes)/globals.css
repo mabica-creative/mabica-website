@@ -30,7 +30,7 @@
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
+    --background: 220.9 39.3% 11%;
     --foreground: 0 0% 95%;
     --card: 24 9.8% 10%;
     --card-foreground: 0 0% 95%;
@@ -98,4 +98,8 @@
 * {
   scrollbar-width: thin; /* Makes the scrollbar thinner */
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+u {
+  text-decoration: underline;
 }

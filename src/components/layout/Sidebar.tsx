@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, PieChart, Users, LayoutDashboard } from "lucide-react";
+import {
+  User,
+  PieChart,
+  Users,
+  LayoutDashboard,
+  NotepadText,
+} from "lucide-react";
 
 export function Sidebar() {
   const pathname: string = usePathname(); // Mendapatkan URL aktif
@@ -11,6 +17,7 @@ export function Sidebar() {
     { href: "/profile", label: "Profile", Icon: User },
     { href: "/overview", label: "Overview", Icon: PieChart },
     { href: "/user", label: "User", Icon: Users },
+    { href: "/markdown", label: "Markdown", Icon: NotepadText },
     { href: "/dashboard", label: "Dashboard", Icon: LayoutDashboard },
   ];
 
@@ -25,7 +32,6 @@ export function Sidebar() {
           }`}
         >
           <Icon className="w-5 h-5" />
-          <span>{label}</span>
         </Link>
       ))}
     </aside>
